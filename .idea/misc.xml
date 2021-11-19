@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/layout/activity_main.xml" value="0.16893115942028986" />
+        <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/layout/fragment_alarms.xml" value="0.16893115942028986" />
         <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/layout/item_alarm.xml" value="0.17572463768115942" />
       </map>
     </option>

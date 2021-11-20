@@ -14,4 +14,9 @@
     <color name="babyblue">#E7F2F8</color>
     <color name="peach">#FBE5C8</color>
 
+    <!-- New color -->
+    <color name="start_even_alarm_item">#AAC9CE</color>
+    <color name="end_even_alarm_item">#F3DBCF</color>
+    <color name="start_odd_alarm_item">#F3DBCF</color>
+    <color name="end_odd_alarm_item">#C9BBC8</color>
 </resources>

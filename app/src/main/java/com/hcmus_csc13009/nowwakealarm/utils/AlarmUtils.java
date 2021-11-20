@@ -10,11 +10,11 @@ import android.widget.Toast;
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.receiver.AlarmBroadcastReceiver;
+import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class AlarmUtils {
     private static SimpleDateFormat TIME_FORMAT =
@@ -94,7 +94,7 @@ public class AlarmUtils {
         if (!alarm.isRepeatMode()) {
             String toastText = null;
             try {
-                toastText = String.format("One Time Alarm %s scheduled for %s at %02d:%02d",
+                toastText = String.format("One-time Alarm %s scheduled for %s at %02d:%02d",
                         alarm.getTitle(),
                         toWeekDay(calendar.get(Calendar.DAY_OF_WEEK)),
                         calendar.get(Calendar.HOUR_OF_DAY),
@@ -109,7 +109,7 @@ public class AlarmUtils {
                     calendar.getTimeInMillis(),
                     alarmPendingIntent);
         } else {
-            String toastText = String.format("Recurring Alarm %s scheduled for %s at %02d:%02d",
+            String toastText = String.format("Repeating Alarm %s scheduled for %s at %02d:%02d",
                     alarm.getTitle(),
                     getRecurringDaysText(alarm),
                     calendar.get(Calendar.HOUR_OF_DAY),
@@ -158,16 +158,14 @@ public class AlarmUtils {
         return days;
     }
 
-    public void cancelAlarm(Context context, Alarm alarm) {
+    public static void cancelAlarm(Context context, Alarm alarm) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarm.getID(),
                 intent, 0);
         alarmManager.cancel(alarmPendingIntent);
         alarm.setEnable(false);
-        String toastText = String.format("Alarm cancelled for %02d:%02d",
-                TimeUnit.MILLISECONDS.toHours(alarm.getTime()),
-                TimeUnit.MILLISECONDS.toMinutes(alarm.getTime()));
+        String toastText = String.format("Alarm %s cancelled", alarm.getTitle());
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
     }
 

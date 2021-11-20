@@ -88,16 +88,15 @@ public class AlarmService extends Service {
         }
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Ring Ring .. Ring Ring")
-                .setContentText(alarmTitle)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(alarmTitle)
+                .setContentText(alarm.getDescription())
+                .setSmallIcon(R.drawable.wall_clock)
                 .setSound(null)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setFullScreenIntent(pendingIntent, true)
                 .build();
-
         // Play ring tone asynchronously
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -105,16 +104,13 @@ public class AlarmService extends Service {
                 mediaPlayer.start();
             }
         });
-
         // Vibrate when alarm or not
         if (alarm.isVibrateMode()) {
             long[] pattern = {0, 100, 1000};
             vibrator.vibrate(pattern, 0);
         }
-
         // Run this foreground service
         startForeground(1, notification);
-
         return START_STICKY;
     }
 

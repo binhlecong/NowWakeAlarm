@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:type="linear"
+        android:angle="45"
+        android:startColor="@color/start_odd_alarm_item"
+        android:endColor="@color/end_odd_alarm_item"/>
+    <corners android:radius="5dp"/>
+</shape>

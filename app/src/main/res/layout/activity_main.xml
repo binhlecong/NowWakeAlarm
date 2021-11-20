@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentContainer"
+        android:layout_alignParentTop="true"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/myViewPager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomAppBar"
+        app:layout_anchor="@+id/fragmentContainer"
+        app:layout_anchorGravity="center" />
+
+    <com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/bottomAppBar"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/turquoise"
+        app:menu_selected_height="54dp"
+        app:menu_selected_width="54dp"
+        app:menu_unselected_height="48dp"
+        app:menu_unselected_width="48dp"
+        app:menu_text_show_on_unselected="true"
+        app:hideOnScroll="true">
+
+    </com.wwdablu.soumya.lottiebottomnav.LottieBottomNav>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RingtonesFragment">
+    android:orientation="horizontal"
+    tools:context=".ui.MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Ringtones Fragment" />
+        android:layout_height="wrap_content"
+        android:text="List Alarms Fragment" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listRingtonesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:layout_margin="16dp"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_alarm">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </FrameLayout>

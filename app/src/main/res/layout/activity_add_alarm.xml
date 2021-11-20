@@ -13,13 +13,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--<ImageButton
-            android:id="@+id/backImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:src="@drawable/ic_back"/>-->
+        android:layout_height="wrap_content"
+        android:background="@color/teal_200">
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -36,20 +31,31 @@
                 android:id="@+id/timePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/teal_200"
                 android:timePickerMode="clock" />
 
-            <EditText
-                android:id="@+id/alarmTitle"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Alarm Title"
-                android:textColorHint="@color/black"/>
-            <EditText
-                android:id="@+id/alarmNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Alarm Note"
-                android:textColorHint="@color/black"/>
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/alarmTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alarm Title"
+                        android:textColorHint="@color/black"/>
+                    <EditText
+                        android:id="@+id/alarmNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alarm Note"
+                        android:textColorHint="@color/black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
 
             <CheckBox
                 android:id="@+id/recurringCheck"

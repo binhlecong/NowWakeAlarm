@@ -17,4 +17,5 @@ public class AddAlarmFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_alarm, container, false);
     }
+    // TODO - binh: Add add alarm and update alarm method here
 }

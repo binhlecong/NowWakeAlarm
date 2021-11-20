@@ -76,10 +76,13 @@ public class AlarmUtils {
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarm.getID(),
                 intent, 0);
 
+        Calendar alarmCalendar = Calendar.getInstance();
+        alarmCalendar.setTimeInMillis(alarm.getTime());
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, (int) TimeUnit.MILLISECONDS.toHours(alarm.getTime()));
-        calendar.set(Calendar.MINUTE, (int) TimeUnit.MILLISECONDS.toMinutes(alarm.getTime()));
+        calendar.set(Calendar.HOUR_OF_DAY, alarmCalendar.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, alarmCalendar.get(Calendar.MINUTE));
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 

@@ -1,6 +1,7 @@
 package com.hcmus_csc13009.nowwakealarm.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class AlarmsFragment extends Fragment {
         adapter = new AlarmAdapter(this.getContext());
         alarmViewModel = new ViewModelProvider(this).get(AlarmViewModel.class);
         alarmViewModel.getAllAlarms().observe(this, adapter::setAlarms);
+        Log.i("@@@ created", "AlarmsFragment");
     }
 
     @Nullable
@@ -44,6 +46,7 @@ public class AlarmsFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 //        recyclerView.setItemAnimator(new DefaultItemAnimator());
         addSwipAndDragItem();
+        Log.i("@@@ onCreateView", "alarmsFragment   ff");
         return view;
     }
 

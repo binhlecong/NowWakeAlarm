@@ -27,12 +27,12 @@
             android:textSize="25sp" />
 
         <View
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/your_name"
-            android:layout_marginStart="15dp"
             android:layout_width="30dp"
             android:layout_height="5dp"
-            android:background="@drawable/bg_search"/>
+            android:layout_below="@id/your_name"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_search" />
 
 
         <LinearLayout

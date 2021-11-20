@@ -1,36 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <FrameLayout
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragmentContainer"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/bottomAppBar"
-        />
+        android:layout_height="wrap_content"
+        android:background="@color/teal_200">
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/teal_200"
+                android:timePickerMode="clock" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/alarmTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alarm Title"
+                        android:textColorHint="@color/black"/>
+                    <EditText
+                        android:id="@+id/alarmNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alarm Note"
+                        android:textColorHint="@color/black"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
-    <com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:id="@+id/bottomAppBar"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/turquoise"
-        app:menu_selected_height="54dp"
-        app:menu_selected_width="54dp"
-        app:menu_unselected_height="48dp"
-        app:menu_unselected_width="48dp"
-        app:menu_text_show_on_unselected="true"
-        app:hideOnScroll="true">
+            <CheckBox
+                android:id="@+id/recurringCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Recurring Alarm"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-    </com.wwdablu.soumya.lottiebottomnav.LottieBottomNav>
+            <HorizontalScrollView
+                android:id="@+id/optionsRecurring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ToggleButton
+                        android:id="@+id/monRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="Mon"
+                        android:textOn="Mon"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200"/>
 
+                    <ToggleButton
+                        android:id="@+id/tueRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:textOff="Tue"
+                        android:textOn="Tue"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    <ToggleButton
+                        android:id="@+id/wedRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="Wed"
+                        android:textOn="Wed"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200" />
+
+                    <ToggleButton
+                        android:id="@+id/thuRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="Thu"
+                        android:textOn="Thu"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200"/>
+
+                    <ToggleButton
+                        android:id="@+id/friRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="Fri"
+                        android:textOn="Fri"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200" />
+
+                    <ToggleButton
+                        android:id="@+id/satRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="Sat"
+                        android:textOn="Sat"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200"/>
+
+                    <ToggleButton
+                        android:id="@+id/sunRecurringCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textOff="Sun"
+                        android:textOn="Sun"
+                        android:layout_margin="3dp"
+                        android:background="@color/purple_200"/>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkTryHard">
+
+                <TextView
+                    android:id="@+id/nameCheckTryHard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Try hard"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/checkBoxTryHard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_centerVertical="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkVibrate">
+
+                <TextView
+                    android:id="@+id/nameCheckVibrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Vibrate"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/checkBoxVibrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_centerVertical="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/teal_200"
+        android:src="@drawable/ic_save"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="20dp"
+        app:maxImageSize="50dp"
+        app:fabSize="normal"
+        app:backgroundTint="@color/purple_200"
+        app:elevation="6dp"/>
+
+</LinearLayout>

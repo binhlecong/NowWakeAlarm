@@ -31,6 +31,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".ui.AddAlarmActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:label = "AddAlarmActivity"/>
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>

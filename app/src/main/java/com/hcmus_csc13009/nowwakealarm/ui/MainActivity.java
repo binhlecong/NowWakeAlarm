@@ -152,7 +152,9 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 break;
             }
             case 2: {
-                setFragment(new AddAlarmFragment());
+                Intent activityIntent = new Intent();
+                activityIntent.setClass(this, AddAlarmActivity.class);
+                startActivity(activityIntent);
                 //mViewPager2.setCurrentItem(2);
                 break;
             }

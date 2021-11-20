@@ -30,14 +30,14 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     FragmentTransaction transaction = null;
     LottieBottomNav bottomNav;
     ArrayList<MenuItem> list;
-    private ViewPager2 mViewPager2;
+    //private ViewPager2 mViewPager2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mViewPager2 = findViewById(R.id.myViewPager2);
+        //mViewPager2 = findViewById(R.id.myViewPager2);
 
         bottomNav   = findViewById(R.id.bottomAppBar);
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         bottomNav.setMenuItemList(list);
         bottomNav.setSelectedIndex(0); //first selected index
 
-        MyViewPager2Adapter adapter = new MyViewPager2Adapter(this);
+        /*MyViewPager2Adapter adapter = new MyViewPager2Adapter(this);
         mViewPager2.setAdapter(adapter);
 
         mViewPager2.setPageTransformer(new DepthPageTransformer());
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
 
                 }
             }
-        });
+        });*/
 
         //First selected fragment
         setFragment(new HomeFragment());
@@ -143,27 +143,27 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         switch (newIndex) {
             case 0: {
                 setFragment(new HomeFragment());
-                mViewPager2.setCurrentItem(0);
+                //mViewPager2.setCurrentItem(0);
                 break;
             }
             case 1: {
                 setFragment(new AlarmsFragment());
-                mViewPager2.setCurrentItem(1);
+                //mViewPager2.setCurrentItem(1);
                 break;
             }
             case 2: {
                 setFragment(new AddAlarmFragment());
-                mViewPager2.setCurrentItem(2);
+                //mViewPager2.setCurrentItem(2);
                 break;
             }
             case 3: {
                 setFragment(new RingtonesFragment());
-                mViewPager2.setCurrentItem(3);
+                //mViewPager2.setCurrentItem(3);
                 break;
             }
             case 4: {
                 setFragment(new MapFragment());
-                mViewPager2.setCurrentItem(4);
+                //mViewPager2.setCurrentItem(4);
                 break;
             }
         }

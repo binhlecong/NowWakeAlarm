@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
 
 import java.io.Serializable;
@@ -115,6 +116,14 @@ public class Alarm implements Serializable {
         return position;
     }
 
+    public LatLng getLatLngPosition() {
+        if (position == null)
+            return null;
+        String[] pos = position.split(",");
+        return new LatLng(Double.parseDouble(pos[0]), Double.parseDouble(pos[1]));
+    }
+    // ------------ setter --------------------
+
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -169,5 +178,9 @@ public class Alarm implements Serializable {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public void setPosition(LatLng position) {
+        this.position = position.latitude + "," + position.longitude;
     }
 }

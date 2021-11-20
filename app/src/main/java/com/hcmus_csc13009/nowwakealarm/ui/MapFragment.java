@@ -3,8 +3,11 @@ package com.hcmus_csc13009.nowwakealarm.ui;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +16,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hcmus_csc13009.nowwakealarm.R;
+import com.hcmus_csc13009.nowwakealarm.models.Alarm;
+import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
+
+import java.util.List;
 
 public class MapFragment extends Fragment {
+    private AlarmViewModel alarmViewModel = null;
+    private List<Alarm> allAlarms;
 
     final private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -32,9 +42,30 @@ public class MapFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            LatLng myHouse = new LatLng(16.4058107,107.6754465);
+            googleMap.addMarker(new MarkerOptions().position(myHouse).title("Marker in My House"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(myHouse));
+            alarmViewModel = new ViewModelProvider(MapFragment.this).get(AlarmViewModel.class);
+            alarmViewModel.getAllAlarms().observe(MapFragment.this, new Observer<List<Alarm>>() {
+                @Override
+                public void onChanged(List<Alarm> alarms) {
+                    if (alarms != null && allAlarms == null) {
+                        for (Alarm alarm : alarms) {
+                            Log.i("@@@ titile", alarm.getTitle());
+                            Log.i("@@@ pos:", alarm.getPosition() == null ? "null" : "ok");
+                            if (alarm.getPosition() != null) {
+                                Log.i("@@@ position: ", alarm.getPosition());
+                                googleMap.addMarker(new MarkerOptions().position(alarm.getLatLngPosition())
+                                        .title(alarm.getTitle())
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer))
+                                        );
+
+                            }
+                        }
+                    }
+                    allAlarms = alarms;
+                }
+            });
         }
     };
 
@@ -51,6 +82,9 @@ public class MapFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+
+
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }

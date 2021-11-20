@@ -69,5 +69,5 @@ public class AlarmsFragment extends Fragment {
         helper.attachToRecyclerView(this.recyclerView);
     }
 
-
+    // TODO - Binh add cancel alarm service listener
 }

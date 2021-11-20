@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,7 +18,9 @@ import android.os.Vibrator;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
+import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
 
 import java.io.IOException;
 
@@ -44,7 +47,7 @@ public class AlarmService extends Service {
         if (bundle != null)
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
 
-        Intent notificationIntent = new Intent(this, RingActivity.class);
+        Intent notificationIntent = new Intent(this, HandleAlarmActivity.class);
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
 //        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
 //        .FLAG_ACTIVITY_NO_USER_ACTION | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -55,7 +58,7 @@ public class AlarmService extends Service {
         if (alarm != null) {
             alarmTitle = alarm.getTitle();
             try {
-                mediaPlayer.setDataSource(this.getBaseContext(), Uri.parse(alarm.getTone()));
+                mediaPlayer.setDataSource(this.getBaseContext(), Uri.parse(alarm.getRingtoneUri()));
                 mediaPlayer.prepareAsync();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -87,7 +90,7 @@ public class AlarmService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Ring Ring .. Ring Ring")
                 .setContentText(alarmTitle)
-                .setSmallIcon(R.drawable.ic_alarm_white_24dp)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setSound(null)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -104,7 +107,7 @@ public class AlarmService extends Service {
         });
 
         // Vibrate when alarm or not
-        if (alarm.isVibrate()) {
+        if (alarm.isVibrateMode()) {
             long[] pattern = {0, 100, 1000};
             vibrator.vibrate(pattern, 0);
         }

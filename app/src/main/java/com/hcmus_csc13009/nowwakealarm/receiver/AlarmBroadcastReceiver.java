@@ -7,7 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
+import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
+import com.hcmus_csc13009.nowwakealarm.service.RescheduleAlarmService;
+import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
 
 import java.util.Calendar;
 
@@ -29,7 +33,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
 
             if (alarm != null) {
-                if (!alarm.isRecurring()) {
+                if (!alarm.isRepeatMode()) {
                     startAlarmService(context, alarm);
                 } else {
                     if (isAlarmToday(alarm)) {
@@ -47,19 +51,19 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         switch (today) {
             case Calendar.MONDAY:
-                return alarm1.isMonday();
+                return alarm1.isRepeatAt(WeekDays.MON);
             case Calendar.TUESDAY:
-                return alarm1.isTuesday();
+                return alarm1.isRepeatAt(WeekDays.TUE);
             case Calendar.WEDNESDAY:
-                return alarm1.isWednesday();
+                return alarm1.isRepeatAt(WeekDays.WED);
             case Calendar.THURSDAY:
-                return alarm1.isThursday();
+                return alarm1.isRepeatAt(WeekDays.THU);
             case Calendar.FRIDAY:
-                return alarm1.isFriday();
+                return alarm1.isRepeatAt(WeekDays.FRI);
             case Calendar.SATURDAY:
-                return alarm1.isSaturday();
+                return alarm1.isRepeatAt(WeekDays.SAT);
             case Calendar.SUNDAY:
-                return alarm1.isSunday();
+                return alarm1.isRepeatAt(WeekDays.SUN);
         }
         return false;
     }
@@ -77,7 +81,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void startRescheduleAlarmsService(Context context) {
-        Intent intentService = new Intent(context, RescheduleAlarmsService.class);
+        Intent intentService = new Intent(context, RescheduleAlarmService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intentService);
         } else {

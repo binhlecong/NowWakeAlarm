@@ -1,17 +1,17 @@
 package com.hcmus_csc13009.nowwakealarm.service;
 
+import static com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils.scheduleAlarm;
+
 import android.content.Intent;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleService;
-import androidx.lifecycle.Observer;
 
+import com.hcmus_csc13009.nowwakealarm.data.AlarmRepository;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 
-import java.util.List;
-
-public class RescheduleAlarmsService extends LifecycleService {
+public class RescheduleAlarmService extends LifecycleService {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,13 +23,10 @@ public class RescheduleAlarmsService extends LifecycleService {
 
         AlarmRepository alarmRepository = new AlarmRepository(getApplication());
         // Use LiveData to observe database changes
-        alarmRepository.getAlarmsLiveData().observe(this, new Observer<List<Alarm>>() {
-            @Override
-            public void onChanged(List<Alarm> alarms) {
-                for (Alarm a : alarms) {
-                    if (a.isStarted()) {
-                        a.schedule(getApplicationContext());
-                    }
+        alarmRepository.getAllAlarms().observe(this, alarms -> {
+            for (Alarm alarm : alarms) {
+                if (alarm.isEnable()) {
+                    scheduleAlarm(getApplicationContext(), alarm);
                 }
             }
         });

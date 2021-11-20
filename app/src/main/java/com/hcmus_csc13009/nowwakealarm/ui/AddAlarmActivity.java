@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.hcmus_csc13009.nowwakealarm.R;
+//import com.hcmus_csc13009.nowwakealarm.databinding.FragmentCreateAlarmBinding;
 
 public class AddAlarmActivity extends AppCompatActivity {
 
@@ -30,6 +31,13 @@ public class AddAlarmActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+    @Nullable
+    @Override
+    public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){

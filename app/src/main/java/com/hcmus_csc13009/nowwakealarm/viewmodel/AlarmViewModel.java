@@ -21,7 +21,7 @@ public class AlarmViewModel extends AndroidViewModel {
         allAlarms = repository.getAllAlarms();
     }
 
-    LiveData<List<Alarm>> getAllAlarms() {
+    public LiveData<List<Alarm>> getAllAlarms() {
         return this.allAlarms;
     }
 

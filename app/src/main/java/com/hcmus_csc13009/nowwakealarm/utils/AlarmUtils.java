@@ -22,4 +22,13 @@ public class AlarmUtils {
         }
         return result.toString();
     }
+
+    public static byte getBitFormat(WeekDays... days) {
+        byte result = 0;
+        for (WeekDays w : days) {
+            int x = w.ordinal();
+            result |= 1 << x;
+        }
+        return result;
+    }
 }

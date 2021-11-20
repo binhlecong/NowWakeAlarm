@@ -43,15 +43,7 @@ public class Alarm implements Serializable {
     @Ignore
     public Alarm(long time, String title, String description, String ringtoneUri,
                  boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode, byte daysInWeek) {
-        this.time = time;
-        this.title = title;
-        this.description = description;
-        this.ringtoneUri = ringtoneUri;
-        this.isEnable = isEnable;
-        this.hardMode = hardMode;
-        this.vibrateMode = vibrateMode;
-        this.repeatMode = repeatMode;
-        this.daysInWeek = daysInWeek;
+        this(time, title, description, ringtoneUri, isEnable, hardMode, vibrateMode, repeatMode, daysInWeek, null, null);
     }
 
     public Alarm(long time, String title, String description, String ringtoneUri,

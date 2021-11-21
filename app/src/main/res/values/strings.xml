@@ -8,4 +8,25 @@
     <string name="alarm_title">My Alarm</string>
     <string name="default_title">My alarm</string>
     <string name="non_recur_alarm">Once off</string>
+    <string name="set_alarm_time">Set Alarm Time</string>
+    <string name="options">Options</string>
+    <string name="title">Title</string>
+    <string name="name_alarm">Name Alarm</string>
+    <string name="alarm_address">Alarm address</string>
+    <string name="alarm_url">Alarm Url</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="try_hard">Try hard</string>
+    <string name="alarm_sound">Alarm Sound</string>
+    <string name="url">Url</string>
+    <string name="more_options">More Options</string>
+    <string name="sun">Sun</string>
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="recurring_days">Recurring Days</string>
+    <string name="alarm_note">Alarm Note</string>
+    <string name="note">Note</string>
 </resources>

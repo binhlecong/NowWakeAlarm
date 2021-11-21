@@ -4,36 +4,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F6E6E8"
     tools:context=".ui.MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:background="@drawable/round_header"/>
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/your_name"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/round_header" />
+
+            <TextView
+                android:id="@+id/your_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:text="Info"
+                android:fontFamily="@font/coconutz"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="5dp"
+                android:layout_below="@id/your_name"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_search" />
+
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/setAddressCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#F6E6E8"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="6dp">
+
+        <LinearLayout
+            android:id="@+id/setAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
-            android:text="Settings"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="30dp"
-            android:layout_height="5dp"
-            android:layout_below="@id/your_name"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_search" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Members"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/coconutz"
+                    android:textSize="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Nguyen Dang Tien Thanh"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Le Cong Binh"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Nguyen Le Bao Thi"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#F6E6E8"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="About us"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/coconutz"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Contact us"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Follow us"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
 </FrameLayout>

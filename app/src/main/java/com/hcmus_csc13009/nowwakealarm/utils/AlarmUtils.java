@@ -18,7 +18,8 @@ import java.util.Locale;
 public class AlarmUtils {
     private static final Calendar calendar = Calendar.getInstance();
     private static SimpleDateFormat TIME_FORMAT =
-            new SimpleDateFormat("hh:mm", Locale.getDefault());
+            new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private static final Calendar calendar = Calendar.getInstance();
 
     public static String getHourMinute(long time) {
         return TIME_FORMAT.format(time);

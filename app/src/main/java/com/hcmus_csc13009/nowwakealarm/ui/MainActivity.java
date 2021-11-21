@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.hcmus_csc13009.nowwakealarm.R;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         //Menu Home
         MenuItem homeItem = MenuItemBuilder.create("home.json", MenuItem.Source.Assets, fontItem, "dash")
                 .pausedProgress(1f)
-                .loop(false)
                 .build();
 
         //Menu Alarms List
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         MenuItem alarmsItem = MenuItemBuilder.createFrom(homeItem, fontItem)
                 .selectedLottieName("alarmclock.json")
                 .unSelectedLottieName("alarmclock.json")
+                .pausedProgress(1f)
                 .loop(true)
                 .build();
 
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         MenuItem addItem = MenuItemBuilder.createFrom(homeItem, fontItem)
                 .selectedLottieName("add.json")
                 .unSelectedLottieName("add.json")
+                .pausedProgress(1f)
+                .loop(true)
                 .build();
 
         //Menu Ringtones List
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 .selectedLottieName("map.json")
                 .unSelectedLottieName("map.json")
                 .pausedProgress(1f)
+                .loop(true)
                 .build();
 
         //Menu Map
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         MenuItem mapItem = MenuItemBuilder.createFrom(homeItem, fontItem)
                 .selectedLottieName("settings.json")
                 .unSelectedLottieName("settings.json")
+                .pausedProgress(1f)
+                .loop(true)
                 .build();
 
 
@@ -154,9 +160,9 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 break;
             }
             case 2: {
-                Intent activityIntent = new Intent();
-                activityIntent.setClass(this, AddAlarmActivity.class);
-                startActivity(activityIntent);
+                startActivity(new Intent(MainActivity.this, AddAlarmActivity.class));
+                bottomNav.setSelectedIndex(1);
+                //setFragment(new AlarmsFragment());
                 //mViewPager2.setCurrentItem(2);
                 break;
             }
@@ -201,5 +207,10 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     @Override
     public void onAnimationCancel(int index, MenuItem menuItem) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

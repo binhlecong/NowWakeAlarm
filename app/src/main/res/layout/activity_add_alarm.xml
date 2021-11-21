@@ -8,7 +8,7 @@
         android:background="#D9A1A0"
         android:orientation="vertical"
         tools:context=".ui.AddAlarmActivity"
-        tools:showIn="@layout/activity_alarm">
+        tools:showIn="@layout/activity_add_alarm">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -27,15 +27,14 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-            android:textSize="21sp"/>
+            android:fontFamily="@font/coconutz"
+            android:textSize="24dp"/>
 
         <TimePicker
             android:id="@+id/timePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#D9A1A0"
-            android:amPmTextColor="@color/white"
-            android:numbersTextColor="@color/white"
             android:layout_gravity="center"
             android:timePickerMode="spinner"/>
 
@@ -85,7 +84,6 @@
                         android:layout_height="wrap_content"
                         android:hint="Alarm Title"
                         android:textSize="24dp"
-                        android:fontFamily="@font/coconutz"
                         android:textColorHint="@color/colorAccent"/>
                     <TextView
                         android:id="@+id/note"
@@ -105,7 +103,6 @@
                         android:layout_height="wrap_content"
                         android:hint="Alarm Note"
                         android:textSize="24dp"
-                        android:fontFamily="@font/coconutz"
                         android:textColorHint="@color/colorAccent"/>
 
                     <CheckBox
@@ -289,6 +286,7 @@
                             app:layout_constraintEnd_toEndOf="parent"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/alarmSoundCard"
                         android:layout_width="match_parent"
@@ -314,7 +312,7 @@
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/coconutz"
-                                android:textSize="24dp"
+                                android:textSize="20dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:layout_editor_absoluteX="0dp" />
@@ -329,12 +327,115 @@
                                 android:textAlignment="center"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                                 android:textColor="@color/black"
-                                android:textSize="20dp"
+                                android:textSize="16dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/setToneAlarm"
                                 tools:layout_editor_absoluteX="0dp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/optionalCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#F6E6E8"
+                        android:layout_marginTop="10dp"
+                        app:cardCornerRadius="6dp">
+                        <TextView
+                            android:id="@+id/titleOptional"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:text="More Options"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/coconutz"
+                            android:textSize="24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:layout_editor_absoluteX="0dp"/>
+                        <LinearLayout
+                            android:id="@+id/optionalOptions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+                            <TextView
+                                android:id="@+id/urlTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="5dp"
+                                android:text="Url"
+                                android:textSize="16dp"
+                                android:fontFamily="@font/coconutz"
+                                android:textColor="@color/black"
+                                android:gravity="top"
+                                />
+                            <EditText
+                                android:id="@+id/urlAlarm"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:hint="Link to open"
+                                android:textSize="24dp"
+                                android:textColorHint="@color/colorAccent"/>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/setAddressCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:cardBackgroundColor="#F6E6E8"
+                                android:layout_marginTop="10dp"
+                                app:cardCornerRadius="6dp">
+
+                                <LinearLayout
+                                    android:id="@+id/setAddress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/setAddressTitle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="6dp"
+                                        android:text="Alarm address"
+                                        android:textAlignment="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/coconutz"
+                                        android:textSize="20dp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:layout_editor_absoluteX="0dp" />
+
+                                    <TextView
+                                        android:id="@+id/nameAddress"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="6dp"
+                                        android:text="Select a location"
+                                        android:fontFamily="@font/coconutz"
+                                        android:textAlignment="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                        android:textColor="@color/black"
+                                        android:textSize="16dp"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/setToneAlarm"
+                                        tools:layout_editor_absoluteX="0dp" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
 
 
                 </LinearLayout>

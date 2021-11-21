@@ -12,12 +12,10 @@ import java.io.Serializable;
 
 @Entity(tableName = "alarm_table")
 public class Alarm implements Serializable {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     private int ID;
 
-    @ColumnInfo(name="request_code")
-    private int requestCode;
     @ColumnInfo(name = "time")
     private long time; // hour:min in millis
     @ColumnInfo(name = "title")
@@ -41,18 +39,22 @@ public class Alarm implements Serializable {
     private String tagUri; // use for open a website such as zoom/meet/....
     @ColumnInfo(name = "position")
     private String position; // string store LatLng
+    @ColumnInfo(name = "address")
+    private String address;
 
 
     @Ignore
-    public Alarm(int requestCode, long time, String title, String description, String ringtoneUri,
-                 boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode, byte daysInWeek) {
-        this(requestCode, time, title, description, ringtoneUri, isEnable, hardMode, vibrateMode, repeatMode, daysInWeek, null, null);
+    public Alarm(int id, long time, String title, String description, String ringtoneUri,
+                 boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode,
+                 byte daysInWeek) {
+        this(id, time, title, description, ringtoneUri, isEnable, hardMode, vibrateMode,
+                repeatMode, daysInWeek, null, null, null);
     }
 
-    public Alarm(int requestCode, long time, String title, String description, String ringtoneUri,
-                 boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode, byte daysInWeek,
-                 String tagUri, String position) {
-        this.requestCode = requestCode;
+    public Alarm(int id, long time, String title, String description, String ringtoneUri,
+                 boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode,
+                 byte daysInWeek, String tagUri, String position, String address) {
+        this.ID = id;
         this.time = time;
         this.title = title;
         this.description = description;
@@ -64,46 +66,88 @@ public class Alarm implements Serializable {
         this.daysInWeek = daysInWeek;
         this.tagUri = tagUri;
         this.position = position;
+        this.address = address;
     }
 
     public int getID() {
         return ID;
     }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     public long getTime() {
         return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getRingtoneUri() {
         return ringtoneUri;
     }
 
+    public void setRingtoneUri(String ringtoneUri) {
+        this.ringtoneUri = ringtoneUri;
+    }
+
     public boolean isEnable() {
         return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
     }
 
     public boolean isHardMode() {
         return hardMode;
     }
 
+    public void setHardMode(boolean hardMode) {
+        this.hardMode = hardMode;
+    }
+    // ------------ setter --------------------
+
     public boolean isVibrateMode() {
         return vibrateMode;
+    }
+
+    public void setVibrateMode(boolean vibrateMode) {
+        this.vibrateMode = vibrateMode;
     }
 
     public boolean isRepeatMode() {
         return repeatMode;
     }
 
+    public void setRepeatMode(boolean repeatMode) {
+        this.repeatMode = repeatMode;
+    }
+
     public byte getDaysInWeek() {
         return daysInWeek;
+    }
+
+    public void setDaysInWeek(byte daysInWeek) {
+        this.daysInWeek = daysInWeek;
     }
 
     public boolean isRepeatAt(WeekDays day) {
@@ -115,68 +159,12 @@ public class Alarm implements Serializable {
         return tagUri;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public LatLng getLatLngPosition() {
-        if (position == null)
-            return null;
-        String[] pos = position.split(",");
-        return new LatLng(Double.parseDouble(pos[0]), Double.parseDouble(pos[1]));
-    }
-    // ------------ setter --------------------
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setRingtoneUri(String ringtoneUri) {
-        this.ringtoneUri = ringtoneUri;
-    }
-
-    public void setEnable(boolean enable) {
-        isEnable = enable;
-    }
-
-    public void setHardMode(boolean hardMode) {
-        this.hardMode = hardMode;
-    }
-
-    public void setVibrateMode(boolean vibrateMode) {
-        this.vibrateMode = vibrateMode;
-    }
-
-    public void setRepeatMode(boolean repeatMode) {
-        this.repeatMode = repeatMode;
-    }
-
-    public void setDaysInWeek(byte daysInWeek) {
-        this.daysInWeek = daysInWeek;
-    }
-
-    public void setRepeatAt(WeekDays day, boolean isRepeat) {
-        int x = day.ordinal();
-        if (isRepeat)
-            this.daysInWeek |= 1 << x;
-        else
-            this.daysInWeek &= ~(1 << x);
-    }
-
     public void setTagUri(String tagUri) {
         this.tagUri = tagUri;
+    }
+
+    public String getPosition() {
+        return position;
     }
 
     public void setPosition(String position) {
@@ -187,11 +175,26 @@ public class Alarm implements Serializable {
         this.position = position.latitude + "," + position.longitude;
     }
 
-    public int getRequestCode() {
-        return requestCode;
+    public LatLng getLatLngPosition() {
+        if (position == null)
+            return null;
+        String[] pos = position.split(",");
+        return new LatLng(Double.parseDouble(pos[0]), Double.parseDouble(pos[1]));
     }
 
-    public void setRequestCode(int requestCode) {
-        this.requestCode = requestCode;
+    public void setRepeatAt(WeekDays day, boolean isRepeat) {
+        int x = day.ordinal();
+        if (isRepeat)
+            this.daysInWeek |= 1 << x;
+        else
+            this.daysInWeek &= ~(1 << x);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

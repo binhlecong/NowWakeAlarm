@@ -19,7 +19,6 @@ public class AlarmUtils {
     private static final Calendar calendar = Calendar.getInstance();
     private static SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.getDefault());
-    private static final Calendar calendar = Calendar.getInstance();
 
     public static String getHourMinute(long time) {
         return TIME_FORMAT.format(time);
@@ -89,7 +88,7 @@ public class AlarmUtils {
         bundle.putSerializable(context.getString(R.string.arg_alarm_obj), alarm);
         intent.putExtra(context.getString(R.string.bundle_alarm_obj), bundle);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context,
-                alarm.getRequestCode(),
+                alarm.getID(),
                 intent, 0);
 
         Calendar alarmCalendar = Calendar.getInstance();
@@ -178,7 +177,7 @@ public class AlarmUtils {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context,
-                alarm.getRequestCode(),
+                alarm.getID(),
                 intent, 0);
         alarmManager.cancel(alarmPendingIntent);
         alarm.setEnable(false);

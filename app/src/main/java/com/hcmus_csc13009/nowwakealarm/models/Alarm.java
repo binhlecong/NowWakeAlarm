@@ -2,7 +2,6 @@ package com.hcmus_csc13009.nowwakealarm.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -15,7 +14,6 @@ public class Alarm implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "id")
     private int ID;
-
     @ColumnInfo(name = "time")
     private long time; // hour:min in millis
     @ColumnInfo(name = "title")
@@ -43,18 +41,10 @@ public class Alarm implements Serializable {
     private String address;
 
 
-    @Ignore
-    public Alarm(int id, long time, String title, String description, String ringtoneUri,
-                 boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode,
-                 byte daysInWeek) {
-        this(id, time, title, description, ringtoneUri, isEnable, hardMode, vibrateMode,
-                repeatMode, daysInWeek, null, null, null);
-    }
-
-    public Alarm(int id, long time, String title, String description, String ringtoneUri,
+    public Alarm(int ID, long time, String title, String description, String ringtoneUri,
                  boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode,
                  byte daysInWeek, String tagUri, String position, String address) {
-        this.ID = id;
+        this.ID = ID;
         this.time = time;
         this.title = title;
         this.description = description;

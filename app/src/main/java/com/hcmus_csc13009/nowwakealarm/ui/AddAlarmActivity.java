@@ -28,6 +28,8 @@ import com.hcmus_csc13009.nowwakealarm.utils.TimePickerUtil;
 import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
+import java.sql.Timestamp;
+
 public class AddAlarmActivity extends AppCompatActivity {
     final static private int REQUEST_FOR_RINGTONE = 5;
 
@@ -192,8 +194,11 @@ public class AddAlarmActivity extends AppCompatActivity {
                 TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
                 TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
 
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        int requestCode = timestamp.hashCode();
+
         if (alarm == null) {
-            alarm = new Alarm(time, alarmTitle, description, tone, true,
+            alarm = new Alarm(requestCode, time, alarmTitle, description, tone, true,
                     isHard, isVibrate, isRepeat, daysInWeek);
         } else {
             alarm.setTime(time);
@@ -212,7 +217,6 @@ public class AddAlarmActivity extends AppCompatActivity {
         updateCurrentAlarmInfo();
         // TODO - sv: create new
         alarmViewModel.insert(alarm);
-        alarm.setID(lastAlarm.getID() + 1);
         AlarmUtils.scheduleAlarm(this, alarm);
     }
 

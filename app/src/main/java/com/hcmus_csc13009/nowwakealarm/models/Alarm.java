@@ -16,6 +16,8 @@ public class Alarm implements Serializable {
     @ColumnInfo(name = "id")
     private int ID;
 
+    @ColumnInfo(name="request_code")
+    private int requestCode;
     @ColumnInfo(name = "time")
     private long time; // hour:min in millis
     @ColumnInfo(name = "title")
@@ -42,14 +44,15 @@ public class Alarm implements Serializable {
 
 
     @Ignore
-    public Alarm(long time, String title, String description, String ringtoneUri,
+    public Alarm(int requestCode, long time, String title, String description, String ringtoneUri,
                  boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode, byte daysInWeek) {
-        this(time, title, description, ringtoneUri, isEnable, hardMode, vibrateMode, repeatMode, daysInWeek, null, null);
+        this(requestCode, time, title, description, ringtoneUri, isEnable, hardMode, vibrateMode, repeatMode, daysInWeek, null, null);
     }
 
-    public Alarm(long time, String title, String description, String ringtoneUri,
+    public Alarm(int requestCode, long time, String title, String description, String ringtoneUri,
                  boolean isEnable, boolean hardMode, boolean vibrateMode, boolean repeatMode, byte daysInWeek,
                  String tagUri, String position) {
+        this.requestCode = requestCode;
         this.time = time;
         this.title = title;
         this.description = description;
@@ -182,5 +185,13 @@ public class Alarm implements Serializable {
 
     public void setPosition(LatLng position) {
         this.position = position.latitude + "," + position.longitude;
+    }
+
+    public int getRequestCode() {
+        return requestCode;
+    }
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
     }
 }

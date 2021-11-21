@@ -26,29 +26,29 @@ public abstract class AlarmRoomDatabase extends RoomDatabase {
 
     public abstract AlarmDao alarmDao();
 
-    final private static Callback sOnOpenCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-            databaseWriteExecutor.execute(() -> {
-                final AlarmDao alarmDao = INSTANCE.alarmDao();
-                if (alarmDao.getLastAlarm().length < 1) {
-                    final Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.HOUR_OF_DAY, 12);
-                    calendar.set(Calendar.MINUTE, 30);
-                    Random random = new Random();
-                    for (int i = 0; i < 5; ++i) {
-                        Alarm alarm = new Alarm(calendar.getTimeInMillis(), String.format("My Alarm %02d", i),
-                                "Nothing to show", "?", i % 2 == 0,
-                                false, false, true, AlarmUtils.getBitFormat(WeekDays.FRI, WeekDays.MON, WeekDays.THU));
-                        alarm.setPosition(new LatLng(random.nextDouble() / 100 + 16.4058107,
-                                                    random.nextDouble() / 100+ 107.6754465));
-                        alarmDao.insert(alarm);
-                    }
-                }
-            });
-        }
-    };
+//    final private static Callback sOnOpenCallback = new RoomDatabase.Callback() {
+//        @Override
+//        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+//            super.onOpen(db);
+//            databaseWriteExecutor.execute(() -> {
+//                final AlarmDao alarmDao = INSTANCE.alarmDao();
+//                if (alarmDao.getLastAlarm().length < 1) {
+//                    final Calendar calendar = Calendar.getInstance();
+//                    calendar.set(Calendar.HOUR_OF_DAY, 12);
+//                    calendar.set(Calendar.MINUTE, 30);
+//                    Random random = new Random();
+//                    for (int i = 0; i < 5; ++i) {
+//                        Alarm alarm = new Alarm(calendar.getTimeInMillis(), String.format("My Alarm %02d", i),
+//                                "Nothing to show", "?", i % 2 == 0,
+//                                false, false, true, AlarmUtils.getBitFormat(WeekDays.FRI, WeekDays.MON, WeekDays.THU));
+//                        alarm.setPosition(new LatLng(random.nextDouble() / 100 + 16.4058107,
+//                                                    random.nextDouble() / 100+ 107.6754465));
+//                        alarmDao.insert(alarm);
+//                    }
+//                }
+//            });
+//        }
+//    };
 
 
     public static AlarmRoomDatabase getDatabase(final Context context) {

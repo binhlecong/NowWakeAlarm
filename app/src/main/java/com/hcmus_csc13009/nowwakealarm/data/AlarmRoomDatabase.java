@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Alarm.class}, version = 1, exportSchema = false)
 public abstract class AlarmRoomDatabase extends RoomDatabase {
     static public AlarmRoomDatabase INSTANCE = null;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);
+    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(2);
 
     public abstract AlarmDao alarmDao();
 

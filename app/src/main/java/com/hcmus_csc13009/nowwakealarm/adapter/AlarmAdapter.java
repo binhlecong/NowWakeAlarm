@@ -1,42 +1,43 @@
 package com.hcmus_csc13009.nowwakealarm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
+import com.hcmus_csc13009.nowwakealarm.ui.AddAlarmActivity;
 import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
-import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
+import com.hcmus_csc13009.nowwakealarm.utils.DatabaseHelper;
 
 import java.util.Collections;
 import java.util.List;
 
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
+    final static public String ALARM_OBJECT_DATA = "ALARM_OBJECT_DATA";
+
     final private LayoutInflater layoutInflater;
     private List<Alarm> alarms;
-    private AlarmViewModel alarmViewModel;
+    private DatabaseHelper databaseHelper;
 
     public AlarmAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public AlarmAdapter(Context context, AlarmViewModel alarmViewModel) {
+    public AlarmAdapter(Context context, DatabaseHelper databaseHelper) {
         this(context);
-        this.alarmViewModel = alarmViewModel;
-
+        this.databaseHelper = databaseHelper;
     }
 
-    public AlarmAdapter(Context context, AlarmViewModel alarmViewModel, List<Alarm> alarms) {
-        this(context, alarmViewModel);
+    public AlarmAdapter(Context context, DatabaseHelper databaseHelper, List<Alarm> alarms) {
+        this(context, databaseHelper);
         this.alarms = alarms;
     }
 
@@ -57,14 +58,18 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
             if (currentAlarm.isRepeatMode()) {
                 holder.repeat.setText(AlarmUtils.getDaysInWeek(currentAlarm.getDaysInWeek()));
             } else {
-                holder.repeat.setText("Once off");
+                holder.repeat.setText(R.string.non_recur_alarm);
             }
-            holder.isStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    currentAlarm.setEnable(b);
-                    alarmViewModel.update(currentAlarm);
+            holder.isStart.setOnCheckedChangeListener((compoundButton, b) -> {
+                if (compoundButton.isShown() || compoundButton.isPressed()) {
+                    databaseHelper.onToggle(currentAlarm);
                 }
+            });
+            holder.itemView.setOnClickListener(view -> {
+                Context context = view.getContext();
+                Intent intent = new Intent(context, AddAlarmActivity.class);
+                intent.putExtra(ALARM_OBJECT_DATA, currentAlarm);
+                context.startActivity(intent);
             });
         }
     }
@@ -86,6 +91,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     public void moveAlarm(int fromPosition, int toPosition) {
         Collections.swap(alarms, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
+//        databaseHelper.onUpdate(alarms.get(fromPosition));
+//        databaseHelper.onUpdate(alarms.get(toPosition));
     }
 
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {

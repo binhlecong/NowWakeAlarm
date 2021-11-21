@@ -116,7 +116,7 @@ public class MapFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 String location  = searchView.getQuery().toString();
                 List<Address> addressList = null;
-                if (location == null || location.length() == 0)
+                if (location.length() == 0)
                     return false;
                 Geocoder geocoder = new Geocoder(MapFragment.this.getContext());
                 try {
@@ -155,7 +155,7 @@ public class MapFragment extends Fragment {
         Log.i("@@@ afterCheckPermission", "true");
 
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), (OnSuccessListener<Location>) location -> {

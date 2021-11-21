@@ -23,6 +23,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:text="List Alarm"
+            android:fontFamily="@font/coconutz"
             android:textColor="@color/white"
             android:textSize="25sp" />
 

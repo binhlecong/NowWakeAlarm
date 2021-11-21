@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
-                android:text="Settings"
+                android:text="Info"
+                android:fontFamily="@font/coconutz"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
@@ -91,6 +92,50 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:text="Nguyen Le Bao Thi"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#F6E6E8"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="About us"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/coconutz"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Contact us"
+                    android:fontFamily="@font/coconutz"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="Follow us"
                     android:fontFamily="@font/coconutz"
                     android:textAlignment="center"
                     android:textColor="@color/black"

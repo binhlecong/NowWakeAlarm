@@ -22,11 +22,12 @@ public class SpriteAnimation extends AppCompatImageView {
     ValueAnimator sprite;
     AnimatorSet animationSet;
     private int posX, posY;
-    private int columns; // number of sprite frame
+    private int columns; // number of sprite frame in one row
+    private int totalFrames; // total number of sprite frame
     private int frameIndex; // current frame in sprite animation
 
     SpriteAnimation(Context context, Bitmap bitmap, int posX, int posY, int width, int height,
-                    int columns, long spriteDuration) {
+                    int columns, int totalFrames, long spriteDuration) {
         super(context, null);
         this.bitmap = bitmap;
         this.columns = columns;
@@ -35,22 +36,29 @@ public class SpriteAnimation extends AppCompatImageView {
         this.frameIndex = 0;
         this.posX = posX;
         this.posY = posY;
+        this.totalFrames = totalFrames;
         animationSet = new AnimatorSet();
         this.setImageBitmap(getSubImage(posX, posY, width, height));
         // setup sprite animation
-        sprite = ValueAnimator.ofInt(0, columns - 1);
+        sprite = ValueAnimator.ofInt(0, totalFrames - 1);
         sprite.setDuration(spriteDuration);
         sprite.setRepeatCount(ValueAnimator.INFINITE);
         sprite.addUpdateListener(valueAnimator -> {
             int id = (Integer) valueAnimator.getAnimatedValue();
             if (id == this.frameIndex) return;
             this.frameIndex = id;
-            int x = posX + id * this.width;
+            int x = posX + (id % this.columns) * this.width;
+            int y = posY + (id / this.columns) * this.height;
             SpriteAnimation.this.setImageBitmap(
                     SpriteAnimation.this.getSubImage(x, this.posY, this.width, this.height));
             invalidate();
         });
         animationSet.play(sprite);
+    }
+
+    SpriteAnimation(Context context, Bitmap bitmap, int posX, int posY, int width, int height,
+                    int columns, long spriteDuration) {
+        this(context, bitmap, posX, posY, width, height, columns, columns, spriteDuration);
     }
 
     // default duration = 40*frames (millis)
@@ -59,6 +67,8 @@ public class SpriteAnimation extends AppCompatImageView {
                            int columns) {
         this(context, bitmap, posX, posY, width, height, columns, 40L * columns);
     }
+    
+    
 
     private Bitmap getSubImage(int x, int y, int width, int height) {
         return Bitmap.createBitmap(this.bitmap, x, y, width, height);
@@ -87,6 +97,10 @@ public class SpriteAnimation extends AppCompatImageView {
 
     public void setColumns(int columns) {
         this.columns = columns;
-        sprite.setIntValues(0, this.columns - 1);
+    }
+
+    public void setTotalFrames(int totalFrames) {
+        this.totalFrames = totalFrames;
+        sprite.setIntValues(0, this.totalFrames - 1);
     }
 }

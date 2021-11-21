@@ -62,12 +62,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listAlarmRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_below="@id/search"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:paddingTop="20dp"
-            tools:listitem="@layout/item_alarm" />
+            tools:listitem="@layout/item_alarm"
+            tools:itemCount="5"/>
     </RelativeLayout>
 </FrameLayout>

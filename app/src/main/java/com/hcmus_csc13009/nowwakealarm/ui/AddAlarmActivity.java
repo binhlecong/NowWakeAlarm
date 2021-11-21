@@ -93,8 +93,15 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
         });
 
+        activityAddAlarmBinding.optionalCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityAddAlarmBinding.optionalOptions.setVisibility(View.VISIBLE);
+            }
+        });
 
-        activityAddAlarmBinding.setAddress.setOnClickListener(new View.OnClickListener() {
+
+        activityAddAlarmBinding.setAddressCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -103,6 +110,7 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

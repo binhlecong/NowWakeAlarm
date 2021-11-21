@@ -75,7 +75,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Alarm Sound");
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) Uri.parse(tone));
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(tone));
             startActivityForResult(intent, REQUEST_FOR_RINGTONE);
         });
 
@@ -158,6 +158,8 @@ public class AddAlarmActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.save) {
             if (alarm != null) {
+                // TODO - sv: cancel before update ? do i need to cancel before update
+                AlarmUtils.cancelAlarm(this, alarm);
                 updateAlarm();
             } else {
                 scheduleAlarm();
@@ -183,7 +185,8 @@ public class AddAlarmActivity extends AppCompatActivity {
                 activityAddAlarmBinding.sunRecurringCheck.isChecked());
         if (daysInWeek == 0)
             isRepeat = false;
-        long time = AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
+        long time = AlarmUtils.getTimeMillis(
+                TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
                 TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
 
         if (alarm == null) {
@@ -204,16 +207,16 @@ public class AddAlarmActivity extends AppCompatActivity {
 
     private void scheduleAlarm() {
         updateCurrentAlarmInfo();
-        // TODO: DB
-        // write into database
+        // TODO - sv: create new
         alarmViewModel.insert(alarm);
+        AlarmUtils.scheduleAlarm(this, alarm);
     }
 
     private void updateAlarm() {
         updateCurrentAlarmInfo();
-        // TODO: DB
-        // update database
+        // TODO - sv: recreate alarm service
         alarmViewModel.update(alarm);
+        AlarmUtils.scheduleAlarm(this, alarm);
     }
 
     @Override

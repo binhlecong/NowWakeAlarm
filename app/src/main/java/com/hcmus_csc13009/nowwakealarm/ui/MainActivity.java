@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 .build();
 
         //Menu Ringtones List
-        fontItem = FontBuilder.create(fontItem).setTitle("Ringtones").build();
+        fontItem = FontBuilder.create(fontItem).setTitle("Map").build();
         MenuItem ringtonesItem = MenuItemBuilder.createFrom(homeItem, fontItem)
                 .selectedLottieName("music.json")
                 .unSelectedLottieName("music.json")
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 .build();
 
         //Menu Map
-        fontItem = FontBuilder.create(fontItem).setTitle("Map").build();
+        fontItem = FontBuilder.create(fontItem).setTitle("Settings").build();
         MenuItem mapItem = MenuItemBuilder.createFrom(homeItem, fontItem)
                 .selectedLottieName("settings.json")
                 .unSelectedLottieName("settings.json")
@@ -159,12 +159,12 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 break;
             }
             case 3: {
-                setFragment(new RingtonesFragment());
+                setFragment(new MapFragment());
                 //mViewPager2.setCurrentItem(3);
                 break;
             }
             case 4: {
-                setFragment(new MapFragment());
+                setFragment(new SettingsFragment());
                 //mViewPager2.setCurrentItem(4);
                 break;
             }

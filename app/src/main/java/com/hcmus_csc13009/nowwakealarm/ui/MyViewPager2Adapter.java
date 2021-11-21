@@ -22,9 +22,9 @@ public class MyViewPager2Adapter extends FragmentStateAdapter {
             case 2:
                 return new AddAlarmFragment();
             case 3:
-                return new RingtonesFragment();
-            case 4:
                 return new MapFragment();
+            case 4:
+                return new SettingsFragment();
             default:
                 return new HomeFragment();
         }

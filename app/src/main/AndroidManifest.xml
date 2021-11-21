@@ -25,21 +25,21 @@
         android:theme="@style/Theme.NowWakeAlarm">
         <activity
             android:name=".ui.HandleAlarmActivity"
-            android:exported="true" >
-
-        </activity>
-        <activity
-            android:name=".ui.AddAlarmActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:label = "AddAlarmActivity"/>
-        <activity
-            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.AddAlarmActivity"
+            android:label="AddAlarmActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true">
+
         </activity>
 
         <receiver

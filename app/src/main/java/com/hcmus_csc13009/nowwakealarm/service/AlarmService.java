@@ -20,10 +20,12 @@ import androidx.core.app.NotificationCompat;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
+import com.hcmus_csc13009.nowwakealarm.challenge.SakeIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class AlarmService extends Service {
     public static final String CHANNEL_ID = "ALARM_SERVICE_CHANNEL";
@@ -50,13 +52,14 @@ public class AlarmService extends Service {
 
         Intent notificationIntent = new Intent(this, HandleAlarmActivity.class);
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
-        notificationIntent.putExtra("challenge_obj", CatchIt.class);
-        //        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
-//        .FLAG_ACTIVITY_NO_USER_ACTION | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Random r = new Random();
+        notificationIntent.putExtra("challenge_obj",
+                (r.nextInt(2) == 0) ? CatchIt.class : SakeIt.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
+        // Alarm default name
         String alarmTitle = getString(R.string.alarm_title);
-
+        // Prepare song to play in another thread
         if (alarm != null) {
             alarmTitle = alarm.getTitle();
             try {
@@ -73,7 +76,6 @@ public class AlarmService extends Service {
                 ex.printStackTrace();
             }
         }
-
         // After Android Oreo, all notification has to belong to a notification channel
         String channelName = "Alarm Background Service";
         NotificationManager notificationManager =

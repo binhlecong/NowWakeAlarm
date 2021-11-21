@@ -202,4 +202,9 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     public void onAnimationCancel(int index, MenuItem menuItem) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

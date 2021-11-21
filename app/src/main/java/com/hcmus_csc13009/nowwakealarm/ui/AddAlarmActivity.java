@@ -236,7 +236,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
+        //startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
         finish();
     }
 

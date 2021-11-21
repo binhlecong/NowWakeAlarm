@@ -25,4 +25,9 @@ public class HomeFragment extends Fragment {
         appName.setTypeface(face);
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,7 +26,7 @@
 
     <com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:id="@+id/bottomAppBar"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
@@ -34,9 +34,8 @@
         app:menu_selected_height="54dp"
         app:menu_selected_width="54dp"
         app:menu_unselected_height="48dp"
-        app:menu_unselected_width="48dp"
-        app:menu_text_show_on_unselected="true" />
+        app:menu_unselected_width="48dp" />
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

@@ -20,8 +20,8 @@ import java.util.Random;
 
 public class CatchIt implements Challenge {
     private int cnt = 3;
-    private HandleAlarmActivity activity;
-    private ConstraintLayout mainLayout;
+    private final HandleAlarmActivity activity;
+    private final ConstraintLayout mainLayout;
 
     public CatchIt(HandleAlarmActivity activity) {
         this.activity = activity;

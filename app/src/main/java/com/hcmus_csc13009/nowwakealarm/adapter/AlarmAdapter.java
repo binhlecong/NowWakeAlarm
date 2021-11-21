@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +19,13 @@ import com.hcmus_csc13009.nowwakealarm.ui.AddAlarmActivity;
 import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
 import com.hcmus_csc13009.nowwakealarm.utils.DatabaseHelper;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
+public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> implements Filterable {
     final static public String ALARM_OBJECT_DATA = "ALARM_OBJECT_DATA";
 
     final private LayoutInflater layoutInflater;
@@ -94,6 +99,42 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 //        databaseHelper.onUpdate(alarms.get(fromPosition));
 //        databaseHelper.onUpdate(alarms.get(toPosition));
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+
+        //Run on background thread
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Alarm> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(alarms);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Alarm alarm : alarms) {
+                    if (alarm.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(alarm);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+
+        //Run on ui thread
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            alarms.clear();
+            alarms.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {
         final private TextView time;

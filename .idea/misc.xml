@@ -11,7 +11,6 @@
         <entry key="..\:/Android/NowWakeAlarm/app/src/main/res/layout/fragment_alarms.xml" value="0.33" />
         <entry key="..\:/Android/NowWakeAlarm/app/src/main/res/layout/fragment_map.xml" value="0.23385416666666667" />
         <entry key="..\:/Android/NowWakeAlarm/app/src/main/res/layout/item_alarm.xml" value="0.25" />
-        <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/drawable/bg_bottom_add_alarm_activity.xml" value="0.1" />
         <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/drawable/bg_clock.xml" value="0.1" />
         <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/drawable/bg_even_alarm_item.xml" value="0.1" />
         <entry key="..\:/Users/admin/Documents/GitHub/NowWakeAlarm/app/src/main/res/drawable/bg_odd_alarm_item.xml" value="0.1" />
@@ -45,8 +44,10 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.31521739130434784" />
         <entry key="app/src/main/res/layout/fragment_map.xml" value="0.2765625" />
         <entry key="app/src/main/res/layout/fragment_ringtones.xml" value="0.31521739130434784" />
+        <entry key="app/src/main/res/layout/fragment_sake_it.xml" value="0.2749094202898551" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.31521739130434784" />
         <entry key="app/src/main/res/layout/item_alarm.xml" value="0.31521739130434784" />
+        <entry key="app/src/main/res/layout/sakeit_fragment.xml" value="0.35052083333333334" />
       </map>
     </option>
   </component>

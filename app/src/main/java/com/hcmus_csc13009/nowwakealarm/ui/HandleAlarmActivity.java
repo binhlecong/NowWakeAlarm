@@ -28,7 +28,6 @@ import java.util.Objects;
 
 public class HandleAlarmActivity extends AppCompatActivity {
     public int shakeCount = 0;
-    int cnt = 3;
     private Alarm alarm;
     private AlarmViewModel alarmsListViewModel;
     private Challenge challenge;
@@ -36,30 +35,7 @@ public class HandleAlarmActivity extends AppCompatActivity {
     private float mAccel;
     private float mAccelCurrent;
     private float mAccelLast;
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 12) {
-                Toast.makeText(getApplicationContext(), "Shake event detected",
-                        Toast.LENGTH_SHORT).show();
-                shakeCount += 1;
-
-                ((SakeIt) challenge).update(shakeCount);
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
-
+    private SensorEventListener mSensorListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +59,13 @@ public class HandleAlarmActivity extends AppCompatActivity {
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
         }
         // Get random challenges from alarm
-//        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
-//        if (challengeClass != null) {
-//            doSomething(challengeClass);
-//        }
-        challenge = new SakeIt(this);
-        challenge.play();
+        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
+        if (challengeClass != null) {
+            doSomething(challengeClass);
+        }
+        // Used for testing
+//        challenge = new SakeIt(this);
+//        challenge.play();
     }
 
     public void dismissAlarm() {
@@ -122,6 +99,26 @@ public class HandleAlarmActivity extends AppCompatActivity {
         mAccel = 10f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
+        mSensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                mAccelLast = mAccelCurrent;
+                mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+                float delta = mAccelCurrent - mAccelLast;
+                mAccel = mAccel * 0.9f + delta;
+                if (mAccel > 12) {
+                    shakeCount += 1;
+                    ((SakeIt) challenge).update(shakeCount);
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+        };
     }
 
     @Override

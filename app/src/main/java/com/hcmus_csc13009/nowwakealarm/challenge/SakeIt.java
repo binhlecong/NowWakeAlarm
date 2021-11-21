@@ -1,6 +1,7 @@
 package com.hcmus_csc13009.nowwakealarm.challenge;
 
-import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -19,17 +20,25 @@ public class SakeIt implements Challenge {
     }
 
     public void prepareChallenge() {
-        shakeCntTextView = new TextView(activity);
-        // Animation
-
-        // Instrcution
-        shakeCntTextView.setText("Shake your device 10 times");
-        shakeCntTextView.setId(View.generateViewId());
-        mainLayout.addView(shakeCntTextView);
+        activity.setContentView(R.layout.fragment_sake_it);
+        shakeCntTextView = activity.findViewById(R.id.sake_left);
+        shakeCntTextView.setText("0");
+        // Rotate clock
+        animateClock();
     }
+
+    private void animateClock() {
+        Animation rotation = AnimationUtils.loadAnimation(activity, R.anim.rotate);
+        rotation.setFillAfter(true);
+        activity.findViewById(R.id.sake_clock).startAnimation(rotation);
+    }
+
 
     public void update(int cnt) {
         shakeCntTextView.setText(String.valueOf(cnt));
+        if (cnt == 20) {
+            activity.dismissAlarm();
+        }
     }
 
     @Override

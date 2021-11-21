@@ -40,6 +40,8 @@ public class AddAlarmActivity extends AppCompatActivity {
     private boolean isHard = false;
     private boolean isRepeat = false;
 
+    private Alarm lastAlarm;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,13 +178,14 @@ public class AddAlarmActivity extends AppCompatActivity {
         String description = activityAddAlarmBinding.alarmNote.getText().toString();
         if (alarmTitle.length() == 0)
             alarmTitle = getString(R.string.default_title);
-        byte daysInWeek = AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
-                activityAddAlarmBinding.tueRecurringCheck.isChecked(),
-                activityAddAlarmBinding.wedRecurringCheck.isChecked(),
-                activityAddAlarmBinding.thuRecurringCheck.isChecked(),
-                activityAddAlarmBinding.friRecurringCheck.isChecked(),
-                activityAddAlarmBinding.satRecurringCheck.isChecked(),
-                activityAddAlarmBinding.sunRecurringCheck.isChecked());
+        byte daysInWeek =
+                AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
+                        activityAddAlarmBinding.tueRecurringCheck.isChecked(),
+                        activityAddAlarmBinding.wedRecurringCheck.isChecked(),
+                        activityAddAlarmBinding.thuRecurringCheck.isChecked(),
+                        activityAddAlarmBinding.friRecurringCheck.isChecked(),
+                        activityAddAlarmBinding.satRecurringCheck.isChecked(),
+                        activityAddAlarmBinding.sunRecurringCheck.isChecked());
         if (daysInWeek == 0)
             isRepeat = false;
         long time = AlarmUtils.getTimeMillis(
@@ -209,6 +212,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         updateCurrentAlarmInfo();
         // TODO - sv: create new
         alarmViewModel.insert(alarm);
+        alarm.setID(lastAlarm.getID() + 1);
         AlarmUtils.scheduleAlarm(this, alarm);
     }
 

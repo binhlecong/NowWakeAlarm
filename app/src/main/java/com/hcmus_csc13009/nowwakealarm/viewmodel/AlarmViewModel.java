@@ -29,6 +29,10 @@ public class AlarmViewModel extends AndroidViewModel {
         repository.insert(alarm);
     }
 
+    public Alarm getLastAlarm() {
+        return repository.getLastAlarm()[0];
+    }
+
     public void delete(Alarm alarm) {
         repository.delete(alarm);
     }

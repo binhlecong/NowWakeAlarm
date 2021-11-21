@@ -285,4 +285,8 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
         setPosition = new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

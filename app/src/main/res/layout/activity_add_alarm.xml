@@ -85,7 +85,6 @@
                         android:layout_height="wrap_content"
                         android:hint="Alarm Title"
                         android:textSize="24dp"
-                        android:fontFamily="@font/coconutz"
                         android:textColorHint="@color/colorAccent"/>
                     <TextView
                         android:id="@+id/note"
@@ -105,7 +104,26 @@
                         android:layout_height="wrap_content"
                         android:hint="Alarm Note"
                         android:textSize="24dp"
+                        android:textColorHint="@color/colorAccent"/>
+
+                    <TextView
+                        android:id="@+id/urlTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Note"
+                        android:textSize="20dp"
                         android:fontFamily="@font/coconutz"
+                        android:textColor="@color/black"
+                        android:gravity="top"
+                        />
+                    <EditText
+                        android:id="@+id/urlAlarm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Alarm Url"
+                        android:textSize="24dp"
                         android:textColorHint="@color/colorAccent"/>
 
                     <CheckBox
@@ -289,6 +307,7 @@
                             app:layout_constraintEnd_toEndOf="parent"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/alarmSoundCard"
                         android:layout_width="match_parent"
@@ -336,7 +355,17 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
-
+                    <Button
+                        android:id="@+id/setAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shape_oval_filled"
+                        android:fontFamily="@font/coconutz"
+                        android:text="Set Address"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>

@@ -43,7 +43,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm);
+        setContentView(R.layout.activity_add_alarm);
 
         alarm = (Alarm) getIntent().getSerializableExtra(AlarmAdapter.ALARM_OBJECT_DATA);
 
@@ -83,9 +83,6 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         activityAddAlarmBinding.checkBoxVibrate.setOnCheckedChangeListener((compoundButton, b) -> isVibrate = b);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         activityAddAlarmBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
@@ -95,6 +92,18 @@ public class AddAlarmActivity extends AppCompatActivity {
                                 TimePickerUtil.getTimePickerMinute(timePicker)));
             }
         });
+
+
+        activityAddAlarmBinding.setAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void loadAlarmInfo(Alarm alarm) {
@@ -219,7 +228,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
+        startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
         finish();
     }
 

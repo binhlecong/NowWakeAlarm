@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.NowWakeAlarm" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">#D9A1A0</item>
+        <item name="colorPrimaryVariant">#D9A1A0</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#A58CB3</item>

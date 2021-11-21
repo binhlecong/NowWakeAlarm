@@ -30,10 +30,9 @@ public class AlarmsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new AlarmAdapter(this.getContext());
         alarmViewModel = new ViewModelProvider(this).get(AlarmViewModel.class);
+        adapter = new AlarmAdapter(this.getContext(), alarmViewModel);
         alarmViewModel.getAllAlarms().observe(this, adapter::setAlarms);
-        Log.i("@@@ created", "AlarmsFragment");
     }
 
     @Nullable
@@ -43,10 +42,9 @@ public class AlarmsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.listAlarmRecyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         addSwipAndDragItem();
-        Log.i("@@@ onCreateView", "alarmsFragment   ff");
         return view;
     }
 
@@ -64,7 +62,7 @@ public class AlarmsFragment extends Fragment {
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         int position = viewHolder.getAdapterPosition();
                         Alarm alarm = adapter.getAlarmAt(position);
-//                        Toast.makeText(Main)
+                        Toast.makeText(AlarmsFragment.this.getContext(), "Deleted " + alarm.getTitle(), Toast.LENGTH_SHORT).show();
                         alarmViewModel.delete(alarm);
                     }
                 }

@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.hcmus_csc13009.nowwakealarm.R;
+import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
 
@@ -49,7 +50,8 @@ public class AlarmService extends Service {
 
         Intent notificationIntent = new Intent(this, HandleAlarmActivity.class);
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
-//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
+        notificationIntent.putExtra("challenge_obj", CatchIt.class);
+        //        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent
 //        .FLAG_ACTIVITY_NO_USER_ACTION | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);

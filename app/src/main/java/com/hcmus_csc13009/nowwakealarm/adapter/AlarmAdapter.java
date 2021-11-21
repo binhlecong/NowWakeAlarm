@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
+import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,13 +23,20 @@ import java.util.List;
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> {
     final private LayoutInflater layoutInflater;
     private List<Alarm> alarms;
+    private AlarmViewModel alarmViewModel;
 
     public AlarmAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
     }
 
-    public AlarmAdapter(Context context, List<Alarm> alarms) {
+    public AlarmAdapter(Context context, AlarmViewModel alarmViewModel) {
         this(context);
+        this.alarmViewModel = alarmViewModel;
+
+    }
+
+    public AlarmAdapter(Context context, AlarmViewModel alarmViewModel, List<Alarm> alarms) {
+        this(context, alarmViewModel);
         this.alarms = alarms;
     }
 
@@ -54,6 +63,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     currentAlarm.setEnable(b);
+                    alarmViewModel.update(currentAlarm);
                 }
             });
         }

@@ -11,24 +11,28 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hcmus_csc13009.nowwakealarm.R;
+import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
+import com.hcmus_csc13009.nowwakealarm.challenge.Challenge;
 import com.hcmus_csc13009.nowwakealarm.customview.SpriteAnimation;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
+import java.lang.reflect.Constructor;
 import java.util.Random;
 
 public class HandleAlarmActivity extends AppCompatActivity {
     int cnt = 3;
     private Alarm alarm;
-    private ConstraintLayout mainLayout;
     private AlarmViewModel alarmsListViewModel;
 
     @Override
@@ -49,14 +53,16 @@ public class HandleAlarmActivity extends AppCompatActivity {
         alarmsListViewModel = new ViewModelProvider(this).get(AlarmViewModel.class);
         // Get alarm from bundle
         Bundle bundle = getIntent().getBundleExtra(getString(R.string.bundle_alarm_obj));
-        if (bundle != null)
+        if (bundle != null) {
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
-        // Run animations
-        mainLayout = findViewById(R.id.mainConstraintLayout);
-        doSomething();
+        }
+        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
+        if (challengeClass != null) {
+            doSomething(challengeClass);
+        }
     }
 
-    private void dismissAlarm() {
+    public void dismissAlarm() {
         if (alarm != null) {
             alarm.setEnable(false);
             cancelAlarm(getBaseContext(), alarm);
@@ -68,83 +74,13 @@ public class HandleAlarmActivity extends AppCompatActivity {
         finish();
     }
 
-    void doSomething() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int scrHeight = displayMetrics.heightPixels - 96;
-        int scrWidth = displayMetrics.widthPixels - 80;
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bird_sprite, options);
-        bmp = Bitmap.createScaledBitmap(bmp, 640, 96, false);
-
-        for (int i = 0; i < cnt; ++i) {
-            SpriteAnimation x = new SpriteAnimation(this, bmp, 0, 0, 80, 96, 8);
-            x.setX(0);
-            x.setY(0);
-            x.setOnClickListener(view -> x.setY(0));
-            Random random = new Random();
-            ObjectAnimator translateX = new ObjectAnimator();
-            translateX.setTarget(x);
-            translateX.setPropertyName("x");
-            translateX.setFloatValues((float) scrWidth);
-            translateX.setDuration((i + 1) * 1000);
-            translateX.setRepeatMode(ValueAnimator.RESTART);
-            translateX.setRepeatCount(ValueAnimator.INFINITE);
-            translateX.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                    float prev = Math.round((Float) translateX.getAnimatedValue());
-                    int nextValue = random.nextInt(scrWidth);
-                    translateX.setFloatValues(prev, nextValue);
-                }
-            });
-            ObjectAnimator translateY = ObjectAnimator.ofFloat(x, "y", scrHeight);
-            translateY.setDuration((i + 1) * 1000);
-            translateY.setRepeatCount(ValueAnimator.INFINITE);
-            translateY.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                    float prev = Math.round((Float) translateY.getAnimatedValue());
-                    int nextValue = random.nextInt(scrHeight);
-                    translateY.setFloatValues(prev, nextValue);
-                }
-            });
-            x.getAnimationSet().playTogether(translateX, translateY);
-            x.getAnimationSet().start();
-            // Add listener to sprite
-            x.setOnClickListener(v -> {
-                cnt--;
-                if (cnt == 0) dismissAlarm();
-                mainLayout.removeView(v);
-            });
-
-            mainLayout.addView(x);
+    void doSomething(Class<?> challengeClass) {
+        try {
+            Constructor<?> ctor = challengeClass.getConstructor(HandleAlarmActivity.class);
+            Challenge challenge = (Challenge) ctor.newInstance(new Object[]{this});
+            challenge.play();
+        } catch (Exception e) {
+            Toast.makeText(this, "Can't not play Challenge", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -7,4 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     map:cameraZoom = "15"
-    tools:context=".ui.MapFragment" />
+    tools:context=".ui.MapFragment">
+    <androidx.appcompat.widget.SearchView
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:id="@+id/searchBar"
+        android:layout_margin = "10dp"
+        android:elevation="5dp"
+        android:background="@color/cardview_light_background"
+        map:iconifiedByDefault="false"
+
+        android:queryHint = "Search here..."/>
+</fragment>

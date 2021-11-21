@@ -10,7 +10,7 @@
         android:id="@+id/waveHeader"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        app:mwhStartColor="@color/peach"
+        app:mwhStartColor="@color/Minosa"
         app:mwhCloseColor="@color/purple_200"
         android:layout_centerHorizontal="true"/>
     <LinearLayout

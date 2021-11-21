@@ -43,7 +43,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         tone = RingtoneManager.getActualDefaultRingtoneUri(this,
                 RingtoneManager.TYPE_ALARM).toString();
         ringtone = RingtoneManager.getRingtone(this, Uri.parse(tone));
-        
+
         activityAddAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
         if (alarm != null) {
             updateAlarmInfo(alarm);
@@ -151,5 +151,11 @@ public class AddAlarmActivity extends AppCompatActivity {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.toolbar_add_menu, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        activityAddAlarmBinding = null;
     }
 }

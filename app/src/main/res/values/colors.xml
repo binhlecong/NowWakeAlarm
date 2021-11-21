@@ -12,7 +12,6 @@
     <color name="turquoise">#8FDDE7</color>
     <color name="spearmint">#B6E5D8</color>
     <color name="babyblue">#E7F2F8</color>
-    <color name="peach">#FBE5C8</color>
 
     <!-- New color -->
     <color name="start_even_alarm_item">#AAC9CE</color>
@@ -20,4 +19,16 @@
     <color name="start_odd_alarm_item">#F3DBCF</color>
     <color name="end_odd_alarm_item">#C9BBC8</color>
     <color name="colorAccent">#D38F8E8E</color>
+
+    <!-- Dark mode color -->
+    <color name="blueWake">#152746</color>
+    <color name="blackBg">#16140f</color>
+    <color name="lightGrey">#baaec3</color>
+    <color name="darkgrey">#747794</color>
+
+    <!-- Theme color -->
+    <color name="peach">#FEC8A7</color>
+    <color name="Minosa">#FCECA5</color>
+    <color name="SeaGreen">#B5EECB</color>
+    <color name="Periwinkle">#CBC7FC</color>
 </resources>

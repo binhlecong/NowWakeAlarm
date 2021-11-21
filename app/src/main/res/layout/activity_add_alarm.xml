@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/teal_200"
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
@@ -14,208 +14,313 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/teal_200">
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TimePicker
-                android:id="@+id/timePicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/teal_200"
-                android:timePickerMode="clock" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <EditText
-                        android:id="@+id/alarmTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Alarm Title"
-                        android:textColorHint="@color/black"/>
-                    <EditText
-                        android:id="@+id/alarmNote"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Alarm Note"
-                        android:textColorHint="@color/black"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <CheckBox
-                android:id="@+id/recurringCheck"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Recurring Alarm"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <HorizontalScrollView
-                android:id="@+id/optionsRecurring"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ToggleButton
-                        android:id="@+id/monRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textOff="Mon"
-                        android:textOn="Mon"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200"/>
-
-                    <ToggleButton
-                        android:id="@+id/tueRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:textOff="Tue"
-                        android:textOn="Tue"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200" />
-
-                    <ToggleButton
-                        android:id="@+id/wedRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textOff="Wed"
-                        android:textOn="Wed"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200" />
-
-                    <ToggleButton
-                        android:id="@+id/thuRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textOff="Thu"
-                        android:textOn="Thu"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200"/>
-
-                    <ToggleButton
-                        android:id="@+id/friRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textOff="Fri"
-                        android:textOn="Fri"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200" />
-
-                    <ToggleButton
-                        android:id="@+id/satRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textOff="Sat"
-                        android:textOn="Sat"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200"/>
-
-                    <ToggleButton
-                        android:id="@+id/sunRecurringCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textOff="Sun"
-                        android:textOn="Sun"
-                        android:layout_margin="3dp"
-                        android:background="@color/purple_200"/>
-                </LinearLayout>
-            </HorizontalScrollView>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkTryHard">
-
-                <TextView
-                    android:id="@+id/nameCheckTryHard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Try hard"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/checkBoxTryHard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:layout_centerVertical="true"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkVibrate">
-
-                <TextView
-                    android:id="@+id/nameCheckVibrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Vibrate"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/checkBoxVibrate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:layout_centerVertical="true"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <TimePicker
+        android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/teal_200"
-        android:src="@drawable/ic_save"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="80dp"
-        android:layout_marginRight="20dp"
-        app:maxImageSize="50dp"
-        app:fabSize="normal"
-        app:backgroundTint="@color/purple_200"
-        app:elevation="6dp"/>
+        android:background="@color/teal_200"
+        android:amPmTextColor="@color/white"
+        android:numbersTextColor="@color/white"
+        android:layout_gravity="center"
+        android:timePickerMode="spinner"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_bottom_add_alarm_activity">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Options"
+                    android:textSize="36dp"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/coconutz"
+                    android:gravity="top"
+                    />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Title"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/coconutz"
+                    android:gravity="top"
+                    />
+                <EditText
+                    android:id="@+id/alarmTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alarm Title"
+                    android:textSize="24dp"
+                    android:fontFamily="@font/coconutz"
+                    android:textColorHint="@color/colorAccent"/>
+                <TextView
+                    android:id="@+id/note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Note"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/coconutz"
+                    android:gravity="top"
+                    />
+                <EditText
+                    android:id="@+id/alarmNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alarm Note"
+                    android:textSize="24dp"
+                    android:fontFamily="@font/coconutz"
+                    android:textColorHint="@color/colorAccent"/>
+
+                <CheckBox
+                    android:id="@+id/recurringCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Recurring Days"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/coconutz"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <HorizontalScrollView
+                    android:id="@+id/optionsRecurring"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ToggleButton
+                            android:id="@+id/monRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="Mon"
+                            android:textOn="Mon"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200"/>
+
+                        <ToggleButton
+                            android:id="@+id/tueRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_weight="1"
+                            android:textOff="Tue"
+                            android:textOn="Tue"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200" />
+
+                        <ToggleButton
+                            android:id="@+id/wedRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="Wed"
+                            android:textOn="Wed"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200" />
+
+                        <ToggleButton
+                            android:id="@+id/thuRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="Thu"
+                            android:textOn="Thu"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200"/>
+
+                        <ToggleButton
+                            android:id="@+id/friRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="Fri"
+                            android:textOn="Fri"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200" />
+
+                        <ToggleButton
+                            android:id="@+id/satRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="Sat"
+                            android:textOn="Sat"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200"/>
+
+                        <ToggleButton
+                            android:id="@+id/sunRecurringCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textOff="Sun"
+                            android:textOn="Sun"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/coconutz"
+                            android:textStyle="italic"
+                            android:layout_margin="3dp"
+                            android:background="@color/purple_200"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkTryHard">
+
+                    <TextView
+                        android:id="@+id/nameCheckTryHard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Try hard"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/coconutz"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/checkBoxTryHard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkVibrate">
+
+                    <TextView
+                        android:id="@+id/nameCheckVibrate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Vibrate"
+                        android:textSize="20dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/coconutz"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/checkBoxVibrate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="3dp"
+                        android:layout_centerVertical="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/alarmSoundCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="18dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp">
+
+                    <LinearLayout
+                        android:id="@+id/alarmSoundItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/setToneAlarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:text="Alarm Sound"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/coconutz"
+                            android:textSize="24dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:layout_editor_absoluteX="0dp" />
+
+                        <TextView
+                            android:id="@+id/setToneNameAlarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:text="Alarm Sound"
+                            android:fontFamily="@font/coconutz"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/black"
+                            android:textSize="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/setToneAlarm"
+                            tools:layout_editor_absoluteX="0dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
 
 </LinearLayout>

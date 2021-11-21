@@ -19,4 +19,5 @@
     <color name="end_even_alarm_item">#F3DBCF</color>
     <color name="start_odd_alarm_item">#F3DBCF</color>
     <color name="end_odd_alarm_item">#C9BBC8</color>
+    <color name="colorAccent">#D38F8E8E</color>
 </resources>

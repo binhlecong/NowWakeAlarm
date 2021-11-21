@@ -115,13 +115,7 @@ public class AlarmActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.save:
-                if(alarm!=null) {
-                    updateAlarm();
-                }
-                else{
-                    scheduleAlarm();
-                }
-                startActivity(new Intent(AlarmActivity.this, MainActivity.class));
+                saveAlarm();
                 return true;
             case R.id.delete:
                 deleteAlarm();
@@ -129,6 +123,16 @@ public class AlarmActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveAlarm() {
+        if(alarm!=null) {
+            updateAlarm();
+        }
+        else{
+            scheduleAlarm();
+        }
+        startActivity(new Intent(AlarmActivity.this, MainActivity.class));
     }
 
     private void deleteAlarm() {

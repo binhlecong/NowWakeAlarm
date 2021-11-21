@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import androidx.databinding.DataBindingUtil;
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.databinding.ActivityAddAlarmBinding;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
+import com.hcmus_csc13009.nowwakealarm.utils.DayUtil;
+import com.hcmus_csc13009.nowwakealarm.utils.TimePickerUtil;
 
 public class AddAlarmActivity extends AppCompatActivity {
 
@@ -40,6 +43,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         tone = RingtoneManager.getActualDefaultRingtoneUri(this,
                 RingtoneManager.TYPE_ALARM).toString();
         ringtone = RingtoneManager.getRingtone(this, Uri.parse(tone));
+        
         activityAddAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
         if (alarm != null) {
             updateAlarmInfo(alarm);
@@ -93,14 +97,14 @@ public class AddAlarmActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*activityAlarmBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+        activityAddAlarmBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                activityAlarmBinding.scheduleAlarmHeading
+                activityAddAlarmBinding.scheduleAlarmHeading
                         .setText(DayUtil.getDay(TimePickerUtil.getTimePickerHour(timePicker),
                                 TimePickerUtil.getTimePickerMinute(timePicker)));
             }
-        });*/
+        });
 
 
     }

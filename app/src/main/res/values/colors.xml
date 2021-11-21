@@ -20,4 +20,11 @@
     <color name="start_odd_alarm_item">#F3DBCF</color>
     <color name="end_odd_alarm_item">#C9BBC8</color>
     <color name="colorAccent">#D38F8E8E</color>
+
+    <!-- Color for Shake It -->
+    <color name="range_1_4">#ff0000</color>
+    <color name="range_5_9">#ec8c00</color>
+    <color name="range_10_13">#e8bc00</color>
+    <color name="range_14_18">#e3db00</color>
+    <color name="range_19_20">#42eb00</color>
 </resources>

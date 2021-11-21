@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.challenge.Challenge;
-import com.hcmus_csc13009.nowwakealarm.challenge.SakeIt;
+import com.hcmus_csc13009.nowwakealarm.challenge.ShakeIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
@@ -59,13 +59,13 @@ public class HandleAlarmActivity extends AppCompatActivity {
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
         }
         // Get random challenges from alarm
-        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
-        if (challengeClass != null) {
-            doSomething(challengeClass);
-        }
+//        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
+//        if (challengeClass != null) {
+//            doSomething(challengeClass);
+//        }
         // Used for testing
-//        challenge = new SakeIt(this);
-//        challenge.play();
+        challenge = new ShakeIt(this);
+        challenge.play();
     }
 
     public void dismissAlarm() {
@@ -111,7 +111,7 @@ public class HandleAlarmActivity extends AppCompatActivity {
                 mAccel = mAccel * 0.9f + delta;
                 if (mAccel > 12) {
                     shakeCount += 1;
-                    ((SakeIt) challenge).update(shakeCount);
+                    ((ShakeIt) challenge).update(shakeCount);
                 }
             }
 

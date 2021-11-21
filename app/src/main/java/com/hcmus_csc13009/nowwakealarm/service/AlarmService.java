@@ -20,7 +20,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
-import com.hcmus_csc13009.nowwakealarm.challenge.SakeIt;
+import com.hcmus_csc13009.nowwakealarm.challenge.ShakeIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
 
@@ -54,7 +54,7 @@ public class AlarmService extends Service {
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
         Random r = new Random();
         notificationIntent.putExtra("challenge_obj",
-                (r.nextInt(2) == 0) ? CatchIt.class : SakeIt.class);
+                (r.nextInt(2) == 0) ? CatchIt.class : ShakeIt.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         // Alarm default name

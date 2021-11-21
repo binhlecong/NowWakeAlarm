@@ -18,12 +18,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import com.hcmus_csc13009.nowwakealarm.R;
-import com.hcmus_csc13009.nowwakealarm.databinding.ActivityAddAlarmBinding;
+import com.hcmus_csc13009.nowwakealarm.databinding.ActivityAlarmBinding;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 
-public class AddAlarmActivity extends AppCompatActivity {
+public class AlarmActivity extends AppCompatActivity {
 
-    ActivityAddAlarmBinding activityAddAlarmBinding;
+    ActivityAlarmBinding activityAlarmBinding;
     String tone;
     Alarm alarm;
     Ringtone ringtone;
@@ -35,28 +35,28 @@ public class AddAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        activityAddAlarmBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_alarm);
+        activityAlarmBinding = DataBindingUtil.setContentView(this, R.layout.activity_alarm);
 
         tone = RingtoneManager.getActualDefaultRingtoneUri(this,
                 RingtoneManager.TYPE_ALARM).toString();
         ringtone = RingtoneManager.getRingtone(this, Uri.parse(tone));
-        activityAddAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
+        activityAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
         if (alarm != null) {
             updateAlarmInfo(alarm);
         }
-        activityAddAlarmBinding.recurringCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        activityAlarmBinding.recurringCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    activityAddAlarmBinding.optionsRecurring.setVisibility(View.VISIBLE);
+                    activityAlarmBinding.optionsRecurring.setVisibility(View.VISIBLE);
                 } else {
-                    activityAddAlarmBinding.optionsRecurring.setVisibility(View.GONE);
+                    activityAlarmBinding.optionsRecurring.setVisibility(View.GONE);
                 }
             }
         });
 
 
-        activityAddAlarmBinding.alarmSoundCard.setOnClickListener(new View.OnClickListener() {
+        activityAlarmBinding.alarmSoundCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
@@ -67,7 +67,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
         });
 
-        activityAddAlarmBinding.checkBoxTryHard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        activityAlarmBinding.checkBoxTryHard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
@@ -78,7 +78,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
         });
 
-        activityAddAlarmBinding.checkBoxVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        activityAlarmBinding.checkBoxVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
@@ -121,12 +121,17 @@ public class AddAlarmActivity extends AppCompatActivity {
                 else{
                     scheduleAlarm();
                 }
-                startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
+                startActivity(new Intent(AlarmActivity.this, MainActivity.class));
                 return true;
-
+            case R.id.delete:
+                deleteAlarm();
+                break;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAlarm() {
     }
 
     private void scheduleAlarm() {
@@ -138,14 +143,15 @@ public class AddAlarmActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
+        startActivity(new Intent(AlarmActivity.this, MainActivity.class));
         finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.toolbar_add_menu, menu);
+        inflater.inflate(R.menu.toolbar_show_menu, menu);
         return true;
     }
 }
+

@@ -38,11 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/options"
@@ -108,12 +109,13 @@
                     android:textSize="20dp"
                     app:layout_constraintStart_toStartOf="parent"/>
 
-                <HorizontalScrollView
+                <ScrollView
                     android:id="@+id/optionsRecurring"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:fillViewport="true">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -209,7 +211,7 @@
                             android:layout_margin="3dp"
                             android:background="@color/purple_200"/>
                     </LinearLayout>
-                </HorizontalScrollView>
+                </ScrollView>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -274,15 +276,14 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/alarmSoundCard"
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="18dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="6dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="6dp">
 
                     <LinearLayout
                         android:id="@+id/alarmSoundItem"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView

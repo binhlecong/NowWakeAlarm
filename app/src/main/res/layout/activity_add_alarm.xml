@@ -380,7 +380,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:hint="Alarm Url"
+                                android:hint="Link to open"
                                 android:textSize="24dp"
                                 android:textColorHint="@color/colorAccent"/>
 
@@ -419,7 +419,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="6dp"
-                                        android:text="Name Alarm"
+                                        android:text="Select a location"
                                         android:fontFamily="@font/coconutz"
                                         android:textAlignment="center"
                                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

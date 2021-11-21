@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NowWakeAlarm">
-
+        <activity
+            android:name=".ui.PlacePickerActivity"
+            android:exported="true" />
         <!--
      The API key for Google Maps-based APIs is defined as a string resource.
      (See the file "res/values/google_maps_api.xml").
@@ -31,20 +33,18 @@
      You need a different API key for each encryption key, including the release key that is used to
      sign the APK for publishing.
      You can define the keys for the debug and release targets in src/debug/ and src/release/.
--->
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
             android:name=".ui.HandleAlarmActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.AddAlarmActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:label = "AddAlarmActivity"/>
+            android:label="AddAlarmActivity"
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
@@ -65,7 +65,6 @@
 
         <service android:name=".service.AlarmService" />
         <service android:name=".service.RescheduleAlarmService" />
-
     </application>
 
 </manifest>

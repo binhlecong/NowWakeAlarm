@@ -5,6 +5,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +31,8 @@ import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 public class AddAlarmActivity extends AppCompatActivity {
     final static private int REQUEST_FOR_RINGTONE = 5;
+    final static private int REQUEST_FOR_POSITION = 55;
+    public static final String EXTRA_POSITION = "RETRIEVE_POSITION";
 
     private AlarmViewModel alarmViewModel;
     private ActivityAddAlarmBinding activityAddAlarmBinding;
@@ -39,6 +42,8 @@ public class AddAlarmActivity extends AppCompatActivity {
     private boolean isVibrate = false;
     private boolean isHard = false;
     private boolean isRepeat = false;
+
+    private String position;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +80,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Alarm Sound");
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) Uri.parse(tone));
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(tone));
             startActivityForResult(intent, REQUEST_FOR_RINGTONE);
         });
 
@@ -84,31 +89,27 @@ public class AddAlarmActivity extends AppCompatActivity {
         activityAddAlarmBinding.checkBoxVibrate.setOnCheckedChangeListener((compoundButton, b) -> isVibrate = b);
 
 
-        activityAddAlarmBinding.timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                activityAddAlarmBinding.scheduleAlarmHeading
-                        .setText(DayUtil.getDay(TimePickerUtil.getTimePickerHour(timePicker),
-                                TimePickerUtil.getTimePickerMinute(timePicker)));
-            }
+        activityAddAlarmBinding.timePicker.setOnTimeChangedListener((timePicker, i, i1) -> {
+            activityAddAlarmBinding.scheduleAlarmHeading
+                    .setText(DayUtil.getDay(TimePickerUtil.getTimePickerHour(timePicker),
+                            TimePickerUtil.getTimePickerMinute(timePicker)));
         });
 
-        activityAddAlarmBinding.optionalCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activityAddAlarmBinding.optionalOptions.setVisibility(View.VISIBLE);
-            }
+        activityAddAlarmBinding.optionalCard.setOnClickListener(v -> {
+            activityAddAlarmBinding.optionalOptions.setVisibility(View.VISIBLE);
         });
 
 
-        activityAddAlarmBinding.setAddressCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        activityAddAlarmBinding.setAddressCard.setOnClickListener(v -> {
+            Intent intent = new Intent(AddAlarmActivity.this, PlacePickerActivity.class);
+            if (alarm != null && alarm.getPosition() != null && alarm.getPosition().length() != 0) {
+                intent.putExtra(EXTRA_POSITION, alarm.getPosition());
+                Log.i("@@@ putExtra", alarm.getPosition());
             }
+            startActivityForResult(intent, REQUEST_FOR_POSITION);
         });
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayShowTitleEnabled(false);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -122,8 +123,10 @@ public class AddAlarmActivity extends AppCompatActivity {
             activityAddAlarmBinding.timePicker.setHour(0);
             activityAddAlarmBinding.timePicker.setMinute(0);
         } else {
-            activityAddAlarmBinding.timePicker.setHour(Integer.parseInt(time[0]));
-            activityAddAlarmBinding.timePicker.setMinute(Integer.parseInt(time[1]));
+            int hour = Integer.parseInt(time[0]);
+            int minute = Integer.parseInt(time[1]);
+            activityAddAlarmBinding.timePicker.setHour(hour);
+            activityAddAlarmBinding.timePicker.setMinute(minute);
         }
         activityAddAlarmBinding.checkBoxTryHard.setChecked(alarm.isHardMode());
         activityAddAlarmBinding.checkBoxVibrate.setChecked(alarm.isVibrateMode());
@@ -161,10 +164,26 @@ public class AddAlarmActivity extends AppCompatActivity {
             ringtone = RingtoneManager.getRingtone(this, Uri.parse(tone));
             activityAddAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
         }
+        // optional field
+        activityAddAlarmBinding.urlAlarm.setText(alarm.getTagUri());
+        if (alarm.getPosition() != null) {
+            MapFragment mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+            if (mapFragment != null) {
+                String result = mapFragment.positionToAddress(alarm.getPosition());
+                activityAddAlarmBinding.nameAddress.setText(result == null ? alarm.getPosition() : result);
+            } else {
+                Log.i("@@@ not found", "map");
+                activityAddAlarmBinding.nameAddress.setText(alarm.getPosition());
+            }
+        } else {
+            activityAddAlarmBinding.nameAddress.setText("Select a location");
+        }
+
         // assign to local value
         this.isRepeat = alarm.isRepeatMode();
         this.isVibrate = alarm.isVibrateMode();
         this.isHard = alarm.isHardMode();
+        this.position = alarm.getPosition();
     }
 
     @Override
@@ -189,6 +208,8 @@ public class AddAlarmActivity extends AppCompatActivity {
     private void updateCurrentAlarmInfo() {
         String alarmTitle = activityAddAlarmBinding.alarmTitle.getText().toString();
         String description = activityAddAlarmBinding.alarmNote.getText().toString();
+        String uri = activityAddAlarmBinding.urlAlarm.getText().toString();
+
         if (alarmTitle.length() == 0)
             alarmTitle = getString(R.string.default_title);
         byte daysInWeek = AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
@@ -205,7 +226,7 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         if (alarm == null) {
             alarm = new Alarm(time, alarmTitle, description, tone, true,
-                    isHard, isVibrate, isRepeat, daysInWeek);
+                    isHard, isVibrate, isRepeat, daysInWeek, uri, position);
         } else {
             alarm.setTime(time);
             alarm.setTitle(alarmTitle);
@@ -216,6 +237,8 @@ public class AddAlarmActivity extends AppCompatActivity {
             alarm.setVibrateMode(isVibrate);
             alarm.setRepeatMode(isRepeat);
             alarm.setDaysInWeek(daysInWeek);
+            alarm.setPosition(position);
+            alarm.setTagUri(uri);
         }
     }
 
@@ -264,6 +287,13 @@ public class AddAlarmActivity extends AppCompatActivity {
                 tone = uri.toString();
                 activityAddAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
             }
+        }
+        if (resultCode == RESULT_OK && requestCode == REQUEST_FOR_POSITION) {
+            if (data == null) return;
+            position = data.getStringExtra(PlacePickerActivity.EXTRA_REPLY_POSITION);
+            if (position != null && position.startsWith("("))
+                position = position.substring(1, position.length() - 1);
+            activityAddAlarmBinding.nameAddress.setText(data.getStringExtra(PlacePickerActivity.EXTRA_REPLY_ADDRESS));
         }
     }
 }

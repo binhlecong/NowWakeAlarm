@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_200"
+        android:background="#D9A1A0"
         android:orientation="vertical"
         tools:context=".ui.AddAlarmActivity"
         tools:showIn="@layout/activity_alarm">
@@ -293,6 +293,7 @@
                         android:id="@+id/alarmSoundCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="#F6E6E8"
                         android:layout_marginTop="10dp"
                         app:cardCornerRadius="6dp">
 
@@ -300,6 +301,7 @@
                             android:id="@+id/alarmSoundItem"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="#F6E6E8"
                             android:orientation="vertical">
 
                             <TextView

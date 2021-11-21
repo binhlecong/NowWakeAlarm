@@ -20,7 +20,7 @@ public class MyViewPager2Adapter extends FragmentStateAdapter {
             case 1:
                 return new AlarmsFragment();
             case 2:
-                return new AddAlarmFragment();
+                return new AlarmsFragment();
             case 3:
                 return new MapFragment();
             case 4:

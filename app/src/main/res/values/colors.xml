@@ -27,4 +27,16 @@
     <color name="range_10_13">#e8bc00</color>
     <color name="range_14_18">#e3db00</color>
     <color name="range_19_20">#42eb00</color>
+
+    <!-- Dark mode color -->
+    <color name="blueWake">#152746</color>
+    <color name="blackBg">#16140f</color>
+    <color name="lightGrey">#baaec3</color>
+    <color name="darkgrey">#747794</color>
+
+    <!-- Theme color -->
+    <color name="peach">#FEC8A7</color>
+    <color name="Minosa">#FCECA5</color>
+    <color name="SeaGreen">#B5EECB</color>
+    <color name="Periwinkle">#CBC7FC</color>
 </resources>

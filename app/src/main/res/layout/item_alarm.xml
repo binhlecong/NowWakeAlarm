@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/turquoise">
+        android:background="#D9A1A0">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="Wake up"
                     android:textAllCaps="true"
+                    android:fontFamily="@font/coconutz"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -53,12 +54,14 @@
                     android:id="@+id/recurDayAlarmItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/coconutz"
                     tools:text="Repeating" />
 
                 <TextView
                     android:id="@+id/timeAlarmItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/coconutz"
                     android:text="00:00"
                     android:textSize="30dp" />
 
@@ -69,9 +72,10 @@
                 android:id="@+id/startAlarmItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="3dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="3dp"
+                android:textColorHighlight="#A58CB3"/>
 
         </RelativeLayout>
     </LinearLayout>

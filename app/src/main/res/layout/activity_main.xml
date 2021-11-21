@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6E6E8"
     tools:context=".ui.MainActivity">
 
     <FrameLayout
@@ -12,6 +13,7 @@
         android:layout_height="match_parent"
         android:id="@+id/fragmentContainer"
         android:layout_alignParentTop="true"
+        android:layout_above="@id/bottomAppBar"
         />
 
     <!--<androidx.viewpager2.widget.ViewPager2
@@ -28,15 +30,13 @@
         android:id="@+id/bottomAppBar"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/turquoise"
+        android:background="@drawable/bg_bottom_nav"
         app:menu_selected_height="54dp"
         app:menu_selected_width="54dp"
         app:menu_unselected_height="48dp"
         app:menu_unselected_width="48dp"
-        app:menu_text_show_on_unselected="true"
-        app:hideOnScroll="true">
+        app:menu_text_show_on_unselected="true" />
 
-    </com.wwdablu.soumya.lottiebottomnav.LottieBottomNav>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

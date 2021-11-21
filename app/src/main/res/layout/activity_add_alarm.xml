@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@color/teal_200">
+            android:background="#D9A1A0">
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
@@ -33,7 +33,7 @@
             android:id="@+id/timePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/teal_200"
+            android:background="#D9A1A0"
             android:amPmTextColor="@color/white"
             android:numbersTextColor="@color/white"
             android:layout_gravity="center"
@@ -293,7 +293,7 @@
                         android:id="@+id/alarmSoundCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#F6E6E8"
+                        app:cardBackgroundColor="#F6E6E8"
                         android:layout_marginTop="10dp"
                         app:cardCornerRadius="6dp">
 
@@ -301,7 +301,7 @@
                             android:id="@+id/alarmSoundItem"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="#F6E6E8"
+
                             android:orientation="vertical">
 
                             <TextView

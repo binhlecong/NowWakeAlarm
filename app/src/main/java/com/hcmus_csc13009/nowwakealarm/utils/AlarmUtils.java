@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.receiver.AlarmBroadcastReceiver;
-import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,9 +18,16 @@ import java.util.Locale;
 public class AlarmUtils {
     private static SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("hh:mm", Locale.getDefault());
+    private static final Calendar calendar = Calendar.getInstance();
 
     public static String getHourMinute(long time) {
         return TIME_FORMAT.format(time);
+    }
+
+    public static long getTimeMillis(int hour, int minute) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTimeInMillis();
     }
 
     public static String getDaysInWeek(int mask) {
@@ -41,6 +47,14 @@ public class AlarmUtils {
         for (WeekDays w : days) {
             int x = w.ordinal();
             result |= 1 << x;
+        }
+        return result;
+    }
+
+    public static byte getBitFormat(boolean... days) {
+        byte result = 0;
+        for (int i = 0; i < 7; ++i) {
+            result |= (days[i] ? 1 : 0) << i;
         }
         return result;
     }

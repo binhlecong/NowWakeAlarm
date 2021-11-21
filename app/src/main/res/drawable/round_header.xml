@@ -7,7 +7,7 @@
     tools:ignore="VectorRaster">
 
     <path
-        android:fillColor="@color/turquoise"
+        android:fillColor="#A58CB3"
         android:fillType="evenOdd"
         android:pathData="M0,0L411,0L411,145.82L411,145.82C297.581,186.06 113.419,186.06 0,145.82L0,0Z" />
 </vector>

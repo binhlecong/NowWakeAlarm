@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         //Menu Ringtones List
         fontItem = FontBuilder.create(fontItem).setTitle("Map").build();
         MenuItem ringtonesItem = MenuItemBuilder.createFrom(homeItem, fontItem)
-                .selectedLottieName("music.json")
-                .unSelectedLottieName("music.json")
-                .pausedProgress(0.75f)
+                .selectedLottieName("map.json")
+                .unSelectedLottieName("map.json")
+                .pausedProgress(1f)
                 .build();
 
         //Menu Map

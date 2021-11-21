@@ -9,7 +9,7 @@
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         app:mwhStartColor="@color/Minosa"
         app:mwhCloseColor="@color/purple_200"
         android:layout_centerHorizontal="true"/>
@@ -34,8 +34,27 @@
             android:layout_height="wrap_content"
             android:text="Now Wake Alarm"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:textSize="30dp"/>
+            android:layout_marginTop="10dp"
+            android:textSize="40dp"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Welcome to our app"
+            android:textColor="#838BC2"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Description"
+            android:textColor="#838BC2"
+            android:textSize="16dp"/>
     </LinearLayout>
 
 

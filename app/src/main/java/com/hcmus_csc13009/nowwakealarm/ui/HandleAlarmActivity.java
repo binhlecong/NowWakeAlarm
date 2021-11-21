@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,6 +69,11 @@ public class HandleAlarmActivity extends AppCompatActivity {
     }
 
     void doSomething() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int scrHeight = displayMetrics.heightPixels - 96;
+        int scrWidth = displayMetrics.widthPixels - 80;
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bird_sprite, options);
@@ -75,14 +81,14 @@ public class HandleAlarmActivity extends AppCompatActivity {
 
         for (int i = 0; i < cnt; ++i) {
             SpriteAnimation x = new SpriteAnimation(this, bmp, 0, 0, 80, 96, 8);
-            x.setX(200 * i);
-            x.setY(50 + 100 * i);
+            x.setX(0);
+            x.setY(0);
             x.setOnClickListener(view -> x.setY(0));
             Random random = new Random();
             ObjectAnimator translateX = new ObjectAnimator();
             translateX.setTarget(x);
             translateX.setPropertyName("x");
-            translateX.setFloatValues(400f);
+            translateX.setFloatValues((float) scrWidth);
             translateX.setDuration((i + 1) * 1000);
             translateX.setRepeatMode(ValueAnimator.RESTART);
             translateX.setRepeatCount(ValueAnimator.INFINITE);
@@ -101,12 +107,12 @@ public class HandleAlarmActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationRepeat(Animator animator) {
-                    int prev = Math.round((Float) translateX.getAnimatedValue());
-                    int nextValue = random.nextInt(800);
+                    float prev = Math.round((Float) translateX.getAnimatedValue());
+                    int nextValue = random.nextInt(scrWidth);
                     translateX.setFloatValues(prev, nextValue);
                 }
             });
-            ObjectAnimator translateY = ObjectAnimator.ofFloat(x, "y", 800f);
+            ObjectAnimator translateY = ObjectAnimator.ofFloat(x, "y", scrHeight);
             translateY.setDuration((i + 1) * 1000);
             translateY.setRepeatCount(ValueAnimator.INFINITE);
             translateY.addListener(new Animator.AnimatorListener() {
@@ -124,8 +130,8 @@ public class HandleAlarmActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationRepeat(Animator animator) {
-                    int prev = Math.round((Float) translateY.getAnimatedValue());
-                    int nextValue = random.nextInt(1600);
+                    float prev = Math.round((Float) translateY.getAnimatedValue());
+                    int nextValue = random.nextInt(scrHeight);
                     translateY.setFloatValues(prev, nextValue);
                 }
             });

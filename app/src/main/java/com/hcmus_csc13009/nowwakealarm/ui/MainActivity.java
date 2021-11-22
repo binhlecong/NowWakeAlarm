@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     FragmentTransaction transaction = null;
     LottieBottomNav bottomNav;
     ArrayList<MenuItem> list;
-    private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
 
     HomeFragment homeFragment = null;
     AlarmsFragment alarmsFragment = null;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //mViewPager2 = findViewById(R.id.myViewPager2);
 
         bottomNav   = findViewById(R.id.bottomAppBar);
 
@@ -118,46 +115,6 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
 
         //First selected fragment
         setFragment(new HomeFragment());
-    }
-
-    private void setUpViewPager() {
-        myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPager.setAdapter(myViewPagerAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position){
-                    case 0:
-                        setFragment(new HomeFragment());
-                        bottomNav.setSelectedIndex(0);
-                        break;
-                    case 1:
-                        setFragment(new AlarmsFragment());
-                        bottomNav.setSelectedIndex(1);
-                        break;
-                    case 2:
-                        setFragment(new MapFragment());
-                        bottomNav.setSelectedIndex(3);
-                        break;
-                    case 3:
-                        setFragment(new SettingsFragment());
-                        bottomNav.setSelectedIndex(4);
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     @Override

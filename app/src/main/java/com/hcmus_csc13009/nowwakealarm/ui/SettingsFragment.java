@@ -90,7 +90,7 @@ public class SettingsFragment extends Fragment {
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.CALL_PHONE},
                             1);
-                    
+
                 } else {
                     try {
                         startActivity(callIntent);

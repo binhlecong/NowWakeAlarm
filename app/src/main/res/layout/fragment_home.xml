@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:text="Description"
+            android:text="An app for heavy sleeper"
             android:fontFamily="@font/coconutz"
             android:textColor="#838BC2"
             android:textSize="16dp"/>

@@ -187,4 +187,8 @@ public class Alarm implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public boolean isPositionEnableMode() {
+        return true;
+    }
 }

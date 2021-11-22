@@ -2,38 +2,40 @@ package com.hcmus_csc13009.nowwakealarm.ui;
 
 import static com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils.cancelAlarm;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hcmus_csc13009.nowwakealarm.R;
-import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
 import com.hcmus_csc13009.nowwakealarm.challenge.Challenge;
-import com.hcmus_csc13009.nowwakealarm.customview.SpriteAnimation;
+import com.hcmus_csc13009.nowwakealarm.challenge.ShakeIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 import java.lang.reflect.Constructor;
-import java.util.Random;
+import java.util.Objects;
 
 public class HandleAlarmActivity extends AppCompatActivity {
-    int cnt = 3;
+    public int shakeCount = 0;
     private Alarm alarm;
     private AlarmViewModel alarmsListViewModel;
+    private Challenge challenge;
+    private SensorManager mSensorManager = null;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+    private SensorEventListener mSensorListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class HandleAlarmActivity extends AppCompatActivity {
         if (bundle != null) {
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
         }
+        // Get random challenges from alarm
         Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
         if (challengeClass != null) {
             doSomething(challengeClass);
@@ -77,10 +80,60 @@ public class HandleAlarmActivity extends AppCompatActivity {
     void doSomething(Class<?> challengeClass) {
         try {
             Constructor<?> ctor = challengeClass.getConstructor(HandleAlarmActivity.class);
-            Challenge challenge = (Challenge) ctor.newInstance(new Object[]{this});
+            challenge = (Challenge) ctor.newInstance(new Object[]{this});
             challenge.play();
         } catch (Exception e) {
             Toast.makeText(this, "Can't not play Challenge", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void prepareSensor() {
+        // ShakeDetector initialization
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel = 10f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+        mSensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+                mAccelLast = mAccelCurrent;
+                mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+                float delta = mAccelCurrent - mAccelLast;
+                mAccel = mAccel * 0.9f + delta;
+                if (mAccel > 12) {
+                    shakeCount += 1;
+                    ((ShakeIt) challenge).update(shakeCount);
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+        };
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        if (mSensorManager != null)
+            mSensorManager.registerListener(mSensorListener,
+                    mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                    SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        if (mSensorManager != null)
+            mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
+    }
+
 }

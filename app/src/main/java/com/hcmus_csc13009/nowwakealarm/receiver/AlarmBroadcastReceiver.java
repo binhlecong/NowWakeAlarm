@@ -68,10 +68,10 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         return false;
     }
 
-    private void startAlarmService(Context context, Alarm alarm1) {
+    private void startAlarmService(Context context, Alarm alarm) {
         Intent intentService = new Intent(context, AlarmService.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(context.getString(R.string.arg_alarm_obj), alarm1);
+        bundle.putSerializable(context.getString(R.string.arg_alarm_obj), alarm);
         intentService.putExtra(context.getString(R.string.bundle_alarm_obj), bundle);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intentService);

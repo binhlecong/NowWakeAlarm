@@ -16,9 +16,9 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AlarmUtils {
+    private static final Calendar calendar = Calendar.getInstance();
     private static SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("HH:mm", Locale.getDefault());
-    private static final Calendar calendar = Calendar.getInstance();
 
     public static String getHourMinute(long time) {
         return TIME_FORMAT.format(time);
@@ -87,7 +87,8 @@ public class AlarmUtils {
         Bundle bundle = new Bundle();
         bundle.putSerializable(context.getString(R.string.arg_alarm_obj), alarm);
         intent.putExtra(context.getString(R.string.bundle_alarm_obj), bundle);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarm.getID(),
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context,
+                alarm.getID(),
                 intent, 0);
 
         Calendar alarmCalendar = Calendar.getInstance();
@@ -175,11 +176,12 @@ public class AlarmUtils {
     public static void cancelAlarm(Context context, Alarm alarm) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarm.getID(),
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context,
+                alarm.getID(),
                 intent, 0);
         alarmManager.cancel(alarmPendingIntent);
         alarm.setEnable(false);
-        String toastText = String.format("Alarm %s cancelled", alarm.getTitle());
+        String toastText = String.format("Alarm %d cancelled", alarm.getID());
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
     }
 

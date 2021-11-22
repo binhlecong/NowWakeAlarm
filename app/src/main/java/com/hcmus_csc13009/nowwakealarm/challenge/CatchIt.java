@@ -3,13 +3,11 @@ package com.hcmus_csc13009.nowwakealarm.challenge;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hcmus_csc13009.nowwakealarm.R;
@@ -19,9 +17,9 @@ import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
 import java.util.Random;
 
 public class CatchIt implements Challenge {
-    private int cnt = 3;
     private final HandleAlarmActivity activity;
-    private final ConstraintLayout mainLayout;
+    private final LinearLayoutCompat mainLayout;
+    private int cnt = 3;
 
     public CatchIt(HandleAlarmActivity activity) {
         this.activity = activity;
@@ -32,12 +30,13 @@ public class CatchIt implements Challenge {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        int scrHeight = displayMetrics.heightPixels - 96;
-        int scrWidth = displayMetrics.widthPixels - 80;
+        int scrHeight = displayMetrics.heightPixels - 400;
+        int scrWidth = displayMetrics.widthPixels - 400;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
-        Bitmap bmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bird_sprite, options);
+        Bitmap bmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.bird_sprite
+                , options);
         bmp = Bitmap.createScaledBitmap(bmp, 640, 96, false);
         Random random = new Random();
 
@@ -106,6 +105,7 @@ public class CatchIt implements Challenge {
             });
 
             mainLayout.addView(x);
+            mainLayout.setBackgroundResource(R.drawable.bg_handle_alarm_lowres);
         }
     }
 

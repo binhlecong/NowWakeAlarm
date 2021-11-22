@@ -12,6 +12,7 @@
     <color name="turquoise">#8FDDE7</color>
     <color name="spearmint">#B6E5D8</color>
     <color name="babyblue">#E7F2F8</color>
+    <color name="peach">#FBE5C8</color>
 
     <!-- New color -->
     <color name="start_even_alarm_item">#AAC9CE</color>
@@ -20,6 +21,13 @@
     <color name="end_odd_alarm_item">#C9BBC8</color>
     <color name="colorAccent">#D38F8E8E</color>
 
+    <!-- Color for Shake It -->
+    <color name="range_1_4">#ff0000</color>
+    <color name="range_5_9">#ec8c00</color>
+    <color name="range_10_13">#e8bc00</color>
+    <color name="range_14_18">#e3db00</color>
+    <color name="range_19_20">#42eb00</color>
+
     <!-- Dark mode color -->
     <color name="blueWake">#152746</color>
     <color name="blackBg">#16140f</color>
@@ -27,7 +35,6 @@
     <color name="darkgrey">#747794</color>
 
     <!-- Theme color -->
-    <color name="peach">#FEC8A7</color>
     <color name="Minosa">#FCECA5</color>
     <color name="SeaGreen">#B5EECB</color>
     <color name="Periwinkle">#CBC7FC</color>

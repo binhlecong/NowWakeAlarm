@@ -47,4 +47,8 @@ public class AlarmRepository {
     public LiveData<List<Alarm>> searchByTitle(String title) {
         return alarmDao.searchByTitle(title);
     }
+
+    public Alarm[] getLastAlarm() {
+        return alarmDao.getLastAlarm();
+    }
 }

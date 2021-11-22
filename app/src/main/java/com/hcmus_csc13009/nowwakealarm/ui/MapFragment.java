@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.utils.MapUtil;
+import com.hcmus_csc13009.nowwakealarm.utils.SettingConstant;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 import java.io.IOException;
@@ -48,14 +49,18 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
     private FusedLocationProviderClient fusedLocationClient;
     private Location deviceLocation = null;
     private SearchView searchView;
+
+    private Marker currentSeach = null;
     private Marker currentSelected = null;
 
     private GoogleMap mMap;
     private Geocoder geocoder = null;
 
     private TextView textView; // support listen address change
+    private ProgressBar progressBar;
 
     private LatLng setPosition;
+
 
     final private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -71,13 +76,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             Toast.makeText(getContext(), "Map is ready", Toast.LENGTH_SHORT).show();
-//            LatLng myHouse = new LatLng(16.4058107,107.6754465);
-//            googleMap.addMarker(new MarkerOptions().position(myHouse).title("Marker in My House"));
             if (setPosition != null) {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(setPosition));
                 if (textView != null)
                     textView.setText(getCurrentSelected());
-
             }
             getDeviceLocation();
 
@@ -87,13 +89,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
             alarmViewModel = new ViewModelProvider(MapFragment.this).get(AlarmViewModel.class);
             alarmViewModel.getAllAlarms().observe(MapFragment.this, alarms -> {
                 if (alarms != null && allAlarms == null) {
-                    for (Alarm alarm : alarms) {
-                        if (alarm.getPosition() != null) {
-                            googleMap.addMarker(new MarkerOptions().position(alarm.getLatLngPosition())
-                                    .title(alarm.getTitle())
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer)));
-                        }
-                    }
+                    attachAlarmPosition(alarms);
                 }
                 allAlarms = alarms;
             });
@@ -147,7 +143,9 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                 if (addressList != null && addressList.size() > 0) {
                     Address address = addressList.get(0);
                     LatLng position = new LatLng(address.getLatitude(), address.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(position).title(location));
+                    if (currentSeach != null)
+                        currentSeach.remove();
+                    currentSeach = mMap.addMarker(new MarkerOptions().position(position).title(location));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 10));
                 } else {
                     Toast.makeText(MapFragment.this.getContext(), "Not found", Toast.LENGTH_SHORT).show();
@@ -162,6 +160,29 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
         });
     }
 
+    private void attachAlarmPosition(List<Alarm> alarms) {
+        mMap.clear();
+        for (Alarm alarm : alarms) {
+            if (alarm.getPosition() != null && !alarm.getPosition().isEmpty()) {
+                LatLng alarmLocation = alarm.getLatLngPosition();
+                MarkerOptions options = new MarkerOptions().position(alarmLocation)
+                        .title(alarm.getTitle());
+                if (!alarm.isEnable())
+                    options.alpha(0.3f);
+                else if (!alarm.isHardMode())
+                    options.alpha(0.8f);
+                if (deviceLocation != null && MapUtil.getDistance(deviceLocation.getLatitude(), deviceLocation.getLongitude(),
+                        alarmLocation.latitude, alarmLocation.longitude) <= SettingConstant.NEARBY_RANGE) {
+                    options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_alarm_nearby));
+                } else {
+                    options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer));
+                }
+                options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer));
+                mMap.addMarker(options);
+            }
+        }
+    }
+
     private void getDeviceLocation() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
@@ -170,7 +191,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
             String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION};
             requestPermissions(permissions, 1234);
-
+            return;
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -202,6 +223,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                             return;
                         }
                     }
+                    getDeviceLocation();
                 }
             }
         }
@@ -216,9 +238,13 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
 
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
+        if (progressBar != null)
+            progressBar.setVisibility(View.VISIBLE);
         updateCurrentSelected(latLng);
         if (textView != null)
             textView.setText(getCurrentSelected());
+        if (progressBar != null)
+            progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -236,7 +262,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
     }
 
     public String getCurrentSelectedPosition() {
-        return currentSelected.getPosition().latitude + ", " + currentSelected.getPosition().longitude;
+        return currentSelected.getPosition().latitude + "," + currentSelected.getPosition().longitude;
     }
 
     private Marker addMarkerOnMap(LatLng latLng) {
@@ -270,19 +296,23 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
 
     public String positionToAddress(String position) {
         if (position == null) return null;
-        Log.i("@@@ position:", position);
         if (position.startsWith("(")) {
             position = position.substring(1, position.length() - 1);
         }
         String[] parts = position.split(",");
         if (parts.length != 2) return null;
-        Log.i("@@@ position", parts[0] + " " + parts[1]);
         return locationToAddress(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
     }
 
     public void setPosition(String position) {
+        if (position == null) return;
         String[] parts = position.split(",");
+        if (parts.length != 2) return;
         setPosition = new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 
     @Override

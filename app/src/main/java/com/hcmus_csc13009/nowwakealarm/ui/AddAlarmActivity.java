@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,11 +28,12 @@ import com.hcmus_csc13009.nowwakealarm.utils.TimePickerUtil;
 import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
+import java.sql.Timestamp;
+
 public class AddAlarmActivity extends AppCompatActivity {
+    public static final String EXTRA_POSITION = "RETRIEVE_POSITION";
     final static private int REQUEST_FOR_RINGTONE = 5;
     final static private int REQUEST_FOR_POSITION = 55;
-    public static final String EXTRA_POSITION = "RETRIEVE_POSITION";
-
     private AlarmViewModel alarmViewModel;
     private ActivityAddAlarmBinding activityAddAlarmBinding;
     private String tone;
@@ -166,15 +166,8 @@ public class AddAlarmActivity extends AppCompatActivity {
         }
         // optional field
         activityAddAlarmBinding.urlAlarm.setText(alarm.getTagUri());
-        if (alarm.getPosition() != null) {
-            MapFragment mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
-            if (mapFragment != null) {
-                String result = mapFragment.positionToAddress(alarm.getPosition());
-                activityAddAlarmBinding.nameAddress.setText(result == null ? alarm.getPosition() : result);
-            } else {
-                Log.i("@@@ not found", "map");
-                activityAddAlarmBinding.nameAddress.setText(alarm.getPosition());
-            }
+        if (alarm.getAddress() != null) {
+            activityAddAlarmBinding.nameAddress.setText(alarm.getAddress());
         } else {
             activityAddAlarmBinding.nameAddress.setText("Select a location");
         }
@@ -194,6 +187,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.save) {
             if (alarm != null) {
+                AlarmUtils.cancelAlarm(this, alarm);
                 updateAlarm();
             } else {
                 scheduleAlarm();
@@ -209,6 +203,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         String alarmTitle = activityAddAlarmBinding.alarmTitle.getText().toString();
         String description = activityAddAlarmBinding.alarmNote.getText().toString();
         String uri = activityAddAlarmBinding.urlAlarm.getText().toString();
+        String address = activityAddAlarmBinding.nameAddress.getText().toString();
 
         if (alarmTitle.length() == 0)
             alarmTitle = getString(R.string.default_title);
@@ -224,9 +219,12 @@ public class AddAlarmActivity extends AppCompatActivity {
         long time = AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
                 TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
 
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        int id = timestamp.hashCode();
+
         if (alarm == null) {
-            alarm = new Alarm(time, alarmTitle, description, tone, true,
-                    isHard, isVibrate, isRepeat, daysInWeek, uri, position);
+            alarm = new Alarm(id, time, alarmTitle, description, tone, true,
+                    isHard, isVibrate, isRepeat, daysInWeek, uri, position, address);
         } else {
             alarm.setTime(time);
             alarm.setTitle(alarmTitle);
@@ -239,6 +237,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             alarm.setDaysInWeek(daysInWeek);
             alarm.setPosition(position);
             alarm.setTagUri(uri);
+            alarm.setAddress(address);
         }
     }
 
@@ -247,6 +246,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         // TODO: DB
         // write into database
         alarmViewModel.insert(alarm);
+        AlarmUtils.scheduleAlarm(this, alarm);
     }
 
     private void updateAlarm() {
@@ -254,6 +254,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         // TODO: DB
         // update database
         alarmViewModel.update(alarm);
+        AlarmUtils.scheduleAlarm(this, alarm);
     }
 
     @Override

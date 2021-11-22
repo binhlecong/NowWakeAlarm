@@ -23,18 +23,15 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 import com.hcmus_csc13009.nowwakealarm.service.RescheduleAlarmService;
-import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
 import com.hcmus_csc13009.nowwakealarm.utils.MapUtil;
 import com.hcmus_csc13009.nowwakealarm.utils.SettingConstant;
 import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
-import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 import java.util.Calendar;
 
@@ -102,7 +99,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
 
             if (alarm != null) {
-                if (alarm.getPosition() != null) {
+                if (alarm.getPosition() != null && alarm.isEnablePosition()) {
                     locationManager = (LocationManager) context
                             .getSystemService(Context.LOCATION_SERVICE);
                     if (locationManager.isProviderEnabled(provider)) {
@@ -118,7 +115,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                                     .getLastKnownLocation(provider);
                             LatLng dest = alarm.getLatLngPosition();
                             if (MapUtil.getDistance(location.getLatitude(), location.getLongitude(),
-                                    dest.latitude, dest.longitude) < SettingConstant.NEARBY_RANGE) {
+                                    dest.latitude, dest.longitude) < SettingConstant.getNearbyRange(context)) {
                                 startNotification(context, alarm);
                             } else {
                                 startAlarm(context);

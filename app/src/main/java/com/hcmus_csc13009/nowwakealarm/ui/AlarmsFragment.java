@@ -24,10 +24,10 @@ import com.hcmus_csc13009.nowwakealarm.utils.DatabaseHelper;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 public class AlarmsFragment extends Fragment implements DatabaseHelper {
+    RecyclerView recyclerView;
     private AlarmViewModel alarmViewModel = null;
     private AlarmAdapter adapter;
     private SearchView searchView;
-    RecyclerView recyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,19 +39,21 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_alarms, container, false);
 
 
         recyclerView = view.findViewById(R.id.listAlarmRecyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+//        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+//        DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         addSwipAndDragItem();
         // manage search view
         searchView = view.findViewById(R.id.search_recipe);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -71,18 +73,23 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
     private void addSwipAndDragItem() {
         ItemTouchHelper helper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                                                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        adapter.moveAlarm(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                    public boolean onMove(@NonNull RecyclerView recyclerView,
+                                          @NonNull RecyclerView.ViewHolder viewHolder,
+                                          @NonNull RecyclerView.ViewHolder target) {
+                        adapter.moveAlarm(viewHolder.getAdapterPosition(),
+                                target.getAdapterPosition());
                         return true;
                     }
 
                     @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
                         int position = viewHolder.getAdapterPosition();
                         Alarm alarm = adapter.getAlarmAt(position);
-                        Toast.makeText(AlarmsFragment.this.getContext(), "Deleted " + alarm.getTitle(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AlarmsFragment.this.getContext(),
+                                "Deleted " + alarm.getTitle(), Toast.LENGTH_SHORT).show();
                         onDelete(alarm);
                     }
                 }
@@ -114,7 +121,6 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
     public void onUpdate(Alarm alarm) {
         alarmViewModel.update(alarm);
         AlarmUtils.scheduleAlarm(getContext(), alarm);
-        // Todo check this
     }
 
 }

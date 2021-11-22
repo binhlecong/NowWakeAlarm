@@ -38,7 +38,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     private AlarmViewModel alarmViewModel;
     private ActivityAddAlarmBinding activityAddAlarmBinding;
     private String tone;
-    private Alarm alarm;
+    private Alarm alarm = null;
     private Ringtone ringtone;
     private boolean isVibrate = false;
     private boolean isHard = false;
@@ -204,8 +204,10 @@ public class AddAlarmActivity extends AppCompatActivity {
 //            startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
             return true;
         } else if (itemId == R.id.delete) {
-            if (alarm != null)
+            if (alarm != null) {
+                AlarmUtils.cancelAlarm(this, alarm);
                 alarmViewModel.delete(alarm);
+            }
             onBackPressed();
             return true;
         }
@@ -220,7 +222,8 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         if (alarmTitle.length() == 0)
             alarmTitle = getString(R.string.default_title);
-        byte daysInWeek = AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
+        byte daysInWeek =
+                AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
                 activityAddAlarmBinding.tueRecurringCheck.isChecked(),
                 activityAddAlarmBinding.wedRecurringCheck.isChecked(),
                 activityAddAlarmBinding.thuRecurringCheck.isChecked(),
@@ -235,7 +238,8 @@ public class AddAlarmActivity extends AppCompatActivity {
         if (daysInWeek == 0)
             isRepeat = false;
 
-        long time = AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
+        long time =
+                AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
                 TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
 
         boolean locationCheck = activityAddAlarmBinding.locationCheck.isChecked();

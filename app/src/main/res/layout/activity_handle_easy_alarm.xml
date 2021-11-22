@@ -11,13 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#A58CB3"
+        android:fontFamily="@font/coconutz"
         android:padding="10dp"
-        android:text="You need to wake up now"
+        android:text="Please wake up"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -36,7 +39,8 @@
         android:id="@+id/btn_dismiss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dismiss alarm"
+        android:fontFamily="@font/coconutz"
+        android:text="Dismiss"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

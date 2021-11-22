@@ -4,20 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sakeit_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F6E6E8">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#A58CB3"
+        android:fontFamily="@font/coconutz"
         android:padding="10dp"
-        android:text="Sake your phone 20 times"
+        android:text="Shake your phone 20 times"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

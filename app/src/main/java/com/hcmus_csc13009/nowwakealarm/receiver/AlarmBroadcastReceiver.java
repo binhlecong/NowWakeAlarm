@@ -1,19 +1,28 @@
 package com.hcmus_csc13009.nowwakealarm.receiver;
 
+import static com.hcmus_csc13009.nowwakealarm.service.AlarmService.CHANNEL_ID;
+
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.hcmus_csc13009.nowwakealarm.R;
@@ -98,48 +107,78 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                                 ActivityCompat.checkSelfPermission(context,
                                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            if (!alarm.isRepeatMode()) {
-                                startAlarmService(context, alarm);
-                            } else {
-                                if (isAlarmToday(alarm)) {
-                                    startAlarmService(context, alarm);
-                                }
-                            }
+                            startAlarm(context);
                         } else {
                             locationManager.requestLocationUpdates(provider,
                                     MIN_TIME_REQUEST, 5, locationListener);
-                            Location loca = locationManager
+                            Location location = locationManager
                                     .getLastKnownLocation(provider);
                             LatLng dest = alarm.getLatLngPosition();
-                            if (MapUtil.getDistance(loca.getLatitude(), loca.getLongitude(),
+                            if (MapUtil.getDistance(location.getLatitude(), location.getLongitude(),
                                     dest.latitude, dest.longitude) < SettingConstant.NEARBY_RANGE) {
                                 startNotifyService(context, alarm);
+                            } else {
+                                startAlarm(context);
                             }
                         }
                     } else {
-                        if (!alarm.isRepeatMode()) {
-                            startAlarmService(context, alarm);
-                        } else {
-                            if (isAlarmToday(alarm)) {
-                                startAlarmService(context, alarm);
-                            }
-                        }
+                        startAlarm(context);
                     }
                 } else {
-                    if (!alarm.isRepeatMode()) {
-                        startAlarmService(context, alarm);
-                    } else {
-                        if (isAlarmToday(alarm)) {
-                            startAlarmService(context, alarm);
-                        }
-                    }
+                    startAlarm(context);
                 }
             }
         }
     }
 
-    private void startNotifyService(Context context, Alarm alarm) {
+    private void startAlarm(Context context) {
+        if (!alarm.isRepeatMode()) {
+            startAlarmService(context, alarm);
+        } else {
+            if (isAlarmToday(alarm)) {
+                startAlarmService(context, alarm);
+            }
+        }
+    }
 
+    private void startNotifyService(Context context, Alarm alarm) {
+        final int id = alarm.getID();
+
+        String channelName = "Alarm Background Service";
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel notificationChannel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationChannel = new NotificationChannel(CHANNEL_ID, channelName,
+                    NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle(alarm.getTitle() + " - Great! You are already here")
+                .setContentText(alarm.getDescription())
+                .setSmallIcon(R.drawable.wall_clock)
+                .setSound(null)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setPriority(NotificationCompat.PRIORITY_MAX);
+
+        if (alarm.getTagUri() != null) {
+            if (alarm.getTagUri().length() != 0) {
+                Intent notificationIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(alarm.getTagUri()));
+                PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                        notificationIntent, 0);
+                builder.setContentText(alarm.getDescription() + " - Tap to open url: " + alarm.getTagUri());
+                builder.setContentIntent(contentIntent);
+            }
+        }
+
+        notificationManager.notify(1, builder.build());
     }
 
     private boolean isAlarmToday(Alarm alarm1) {

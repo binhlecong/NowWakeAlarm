@@ -181,7 +181,7 @@ public class AlarmUtils {
                 intent, 0);
         alarmManager.cancel(alarmPendingIntent);
         alarm.setEnable(false);
-        String toastText = String.format("Alarm %d cancelled", alarm.getID());
+        String toastText = String.format("Alarm %s cancelled", alarm.getTitle());
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
     }
 

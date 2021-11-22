@@ -3,16 +3,19 @@ package com.hcmus_csc13009.nowwakealarm.ui;
 import static com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils.cancelAlarm;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -28,6 +31,7 @@ import java.util.Objects;
 
 public class HandleAlarmActivity extends AppCompatActivity {
     public int shakeCount = 0;
+    private AlertDialog dialog;
     private Alarm alarm;
     private AlarmViewModel alarmsListViewModel;
     private Challenge challenge;
@@ -63,17 +67,46 @@ public class HandleAlarmActivity extends AppCompatActivity {
         if (challengeClass != null) {
             doSomething(challengeClass);
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Open this url: " + alarm.getTagUri());
+        builder.setCancelable(true);
+        builder.setPositiveButton(
+                "Open link",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        Intent intent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(alarm.getTagUri()));
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+        builder.setNegativeButton(
+                "Exit",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+        dialog = builder.create();
     }
 
     public void dismissAlarm() {
+        // Exit activity and end alarm service
+        Intent intentService = new Intent(getApplicationContext(), AlarmService.class);
+        getApplicationContext().stopService(intentService);
         if (alarm != null) {
             alarm.setEnable(false);
             cancelAlarm(getBaseContext(), alarm);
             alarmsListViewModel.update(alarm);
+
+            if (alarm.getTagUri() != null && alarm.getTagUri().length() != 0) {
+                dialog.show();
+                return;
+            }
         }
-        // Exit activity and end alarm service
-        Intent intentService = new Intent(getApplicationContext(), AlarmService.class);
-        getApplicationContext().stopService(intentService);
         finish();
     }
 

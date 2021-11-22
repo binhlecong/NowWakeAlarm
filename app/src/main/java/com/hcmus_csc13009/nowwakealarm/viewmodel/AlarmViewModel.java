@@ -49,4 +49,8 @@ public class AlarmViewModel extends AndroidViewModel {
         return repository.searchByTitle(title);
     }
 
+    public String getNearbyRange() {
+        return repository.getNearbyRange();
+    }
+
 }

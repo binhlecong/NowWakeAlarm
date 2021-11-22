@@ -51,4 +51,8 @@ public class AlarmRepository {
     public Alarm[] getLastAlarm() {
         return alarmDao.getLastAlarm();
     }
+
+    public String getNearbyRange() {
+        return alarmDao.getNearbyRange();
+    }
 }

@@ -2,6 +2,7 @@ package com.hcmus_csc13009.nowwakealarm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,17 @@ import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
 import com.hcmus_csc13009.nowwakealarm.utils.DatabaseHelper;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder> implements Filterable {
     final static public String ALARM_OBJECT_DATA = "ALARM_OBJECT_DATA";
 
     final private LayoutInflater layoutInflater;
-    private List<Alarm> alarms;
-    private List<Alarm> filteredDataAlarm;
     private DatabaseHelper databaseHelper;
+
+    private List<Alarm> alarms;
+    private List<Alarm> alarmsOld;
 
     public AlarmAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
@@ -58,6 +58,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         if (alarms != null) {
             Alarm currentAlarm = alarms.get(position);
+            Log.i("@@@ ID = ", "" + currentAlarm.getID());
             holder.isStart.setChecked(currentAlarm.isEnable());
             holder.title.setText(currentAlarm.getTitle());
             holder.time.setText(AlarmUtils.getHourMinute(currentAlarm.getTime()));
@@ -91,6 +92,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     public void setAlarms(List<Alarm> alarms) {
         this.alarms = alarms;
+        this.alarmsOld = this.alarms;
         notifyDataSetChanged();
     }
 
@@ -101,40 +103,38 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 //        databaseHelper.onUpdate(alarms.get(toPosition));
     }
 
+
     @Override
     public Filter getFilter() {
-        return filter;
-    }
 
-    Filter filter = new Filter() {
-
-        //Run on background thread
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Alarm> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0){
-                filteredList = alarms;
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Alarm alarm : alarms) {
-                    if (alarm.getTitle().toLowerCase().contains(filterPattern)){
-                        filteredList.add(alarm);
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String searchStr = charSequence.toString().toLowerCase();
+                if (searchStr.isEmpty()) {
+                    alarms = alarmsOld;
+                } else {
+                    List<Alarm> list = new ArrayList<>();
+                    for (Alarm alarm : alarmsOld) {
+                        if (alarm.getTitle().toLowerCase().contains(searchStr) ||
+                            alarm.getDescription().toLowerCase().contains(searchStr)) {
+                            list.add(alarm);
+                        }
                     }
+                    alarms = list;
                 }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = alarms;
+                return filterResults;
             }
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredList;
-            return filterResults;
-        }
 
-        //Run on ui thread
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            alarms.clear();
-            alarms.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                alarms = (List<Alarm>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
 
 
     public static class AlarmViewHolder extends RecyclerView.ViewHolder {

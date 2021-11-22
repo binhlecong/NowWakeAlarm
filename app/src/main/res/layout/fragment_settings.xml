@@ -170,6 +170,7 @@
                             android:fontFamily="@font/coconutz"
                             android:hint="1000"
                             android:textSize="16dp"
+                            android:inputType="number"
                             android:textColorHint="@color/colorAccent"/>
                         <Button
                             android:id="@+id/setRadius"

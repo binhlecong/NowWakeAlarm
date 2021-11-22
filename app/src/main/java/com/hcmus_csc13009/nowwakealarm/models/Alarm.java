@@ -145,6 +145,13 @@ public class Alarm implements Serializable {
         return (daysInWeek >> x & 1) == 1; //if bit x on then it repeated
     }
 
+    public boolean isEnablePosition() {
+        // use redundant 8-th bit
+        if (position == null || position.isEmpty())
+            return false;
+        return (daysInWeek >> 7 & 1) == 1;
+    }
+
     public String getTagUri() {
         return tagUri;
     }
@@ -188,7 +195,4 @@ public class Alarm implements Serializable {
         this.address = address;
     }
 
-    public boolean isPositionEnableMode() {
-        return true;
-    }
 }

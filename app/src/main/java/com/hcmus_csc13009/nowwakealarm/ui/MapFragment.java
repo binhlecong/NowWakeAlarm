@@ -6,7 +6,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +72,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
          * user has installed Google Play services and returned to the app.
          */
         @Override
-        public void onMapReady(GoogleMap googleMap) {
+        public void onMapReady(@NonNull GoogleMap googleMap) {
             mMap = googleMap;
             Toast.makeText(getContext(), "Map is ready", Toast.LENGTH_SHORT).show();
             if (setPosition != null) {
@@ -172,7 +171,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                 else if (!alarm.isHardMode())
                     options.alpha(0.8f);
                 if (deviceLocation != null && MapUtil.getDistance(deviceLocation.getLatitude(), deviceLocation.getLongitude(),
-                        alarmLocation.latitude, alarmLocation.longitude) <= SettingConstant.NEARBY_RANGE) {
+                        alarmLocation.latitude, alarmLocation.longitude) <= SettingConstant.getNearbyRange(getActivity().getApplicationContext())) {
                     options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_alarm_nearby));
                 } else {
                     options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer));

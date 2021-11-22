@@ -26,7 +26,7 @@ public interface AlarmDao {
     @Query("DELETE FROM alarm_table")
     void deleteAll();
 
-    @Query("SELECT * FROM alarm_table ORDER BY id DESC")
+    @Query("SELECT * FROM alarm_table WHERE id <> 0 ORDER BY id DESC")
     LiveData<List<Alarm>> getAllAlarms();
 
     @Query("SELECT * FROM alarm_table LIMIT 1")
@@ -37,4 +37,7 @@ public interface AlarmDao {
 
     @Query("SELECT * FROM alarm_table WHERE (days_in_week >> :day & 1) = 1")
     LiveData<List<Alarm>> getByDay(int day);
+
+    @Query("SELECT title FROM alarm_table WHERE id = 0")
+    String getNearbyRange();
 }

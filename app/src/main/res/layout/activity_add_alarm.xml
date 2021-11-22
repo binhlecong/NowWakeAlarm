@@ -417,6 +417,16 @@
                                         android:textAlignment="center"
                                         android:textColor="@color/black"
                                         android:textSize="16dp" />
+
+                                    <CheckBox
+                                        android:id="@+id/locationCheck"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:checked="false"
+                                        android:text="Location"
+                                        android:textColor="@color/black"
+                                        android:fontFamily="@font/coconutz"
+                                        android:textSize="20dp"/>
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
 

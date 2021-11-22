@@ -42,6 +42,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     private boolean isVibrate = false;
     private boolean isHard = false;
     private boolean isRepeat = false;
+    private boolean isPositionEnable = false;
 
     private String position;
 
@@ -131,6 +132,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         activityAddAlarmBinding.checkBoxTryHard.setChecked(alarm.isHardMode());
         activityAddAlarmBinding.checkBoxVibrate.setChecked(alarm.isVibrateMode());
         activityAddAlarmBinding.recurringCheck.setChecked(alarm.isRepeatMode());
+        activityAddAlarmBinding.recurringCheck.setChecked(alarm.isPositionEnableMode());
         if (alarm.isRepeatMode()) {
             activityAddAlarmBinding.optionsRecurring.setVisibility(View.VISIBLE);
             for (WeekDays day : WeekDays.values()) {
@@ -171,6 +173,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         } else {
             activityAddAlarmBinding.nameAddress.setText("Select a location");
         }
+
 
         // assign to local value
         this.isRepeat = alarm.isRepeatMode();

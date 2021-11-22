@@ -25,7 +25,8 @@
             android:text="List Alarm"
             android:fontFamily="@font/coconutz"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textAllCaps="true"
+            android:textSize="36sp" />
 
         <View
             android:layout_width="30dp"

@@ -30,6 +30,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     final private LayoutInflater layoutInflater;
     private List<Alarm> alarms;
+    private List<Alarm> filteredDataAlarm;
     private DatabaseHelper databaseHelper;
 
     public AlarmAdapter(Context context) {
@@ -112,7 +113,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Alarm> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0){
-                filteredList.addAll(alarms);
+                filteredList = alarms;
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Alarm alarm : alarms) {

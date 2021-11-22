@@ -29,4 +29,11 @@
     <string name="recurring_days">Recurring Days</string>
     <string name="alarm_note">Alarm Note</string>
     <string name="note">Note</string>
+
+    <string-array name="Radius">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+    </string-array>
 </resources>

@@ -187,6 +187,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.save) {
             if (alarm != null) {
+                AlarmUtils.cancelAlarm(this, alarm);
                 updateAlarm();
             } else {
                 scheduleAlarm();

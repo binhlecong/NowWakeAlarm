@@ -59,13 +59,10 @@ public class HandleAlarmActivity extends AppCompatActivity {
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
         }
         // Get random challenges from alarm
-//        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
-//        if (challengeClass != null) {
-//            doSomething(challengeClass);
-//        }
-        // Used for testing
-        challenge = new ShakeIt(this);
-        challenge.play();
+        Class<?> challengeClass = (Class<?>) getIntent().getSerializableExtra("challenge_obj");
+        if (challengeClass != null) {
+            doSomething(challengeClass);
+        }
     }
 
     public void dismissAlarm() {
@@ -83,7 +80,7 @@ public class HandleAlarmActivity extends AppCompatActivity {
     void doSomething(Class<?> challengeClass) {
         try {
             Constructor<?> ctor = challengeClass.getConstructor(HandleAlarmActivity.class);
-            Challenge challenge = (Challenge) ctor.newInstance(new Object[]{this});
+            challenge = (Challenge) ctor.newInstance(new Object[]{this});
             challenge.play();
         } catch (Exception e) {
             Toast.makeText(this, "Can't not play Challenge", Toast.LENGTH_SHORT).show();
@@ -125,15 +122,17 @@ public class HandleAlarmActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         // Add the following line to register the Session Manager Listener onResume
-        mSensorManager.registerListener(mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
+        if (mSensorManager != null)
+            mSensorManager.registerListener(mSensorListener,
+                    mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                    SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     public void onPause() {
         // Add the following line to unregister the Sensor Manager onPause
-        mSensorManager.unregisterListener(mSensorListener);
+        if (mSensorManager != null)
+            mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
 

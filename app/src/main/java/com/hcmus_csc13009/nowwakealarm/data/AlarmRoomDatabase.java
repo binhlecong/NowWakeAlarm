@@ -19,7 +19,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Alarm.class}, version = 1, exportSchema = false)
+@Database(entities = {Alarm.class}, version = 4, exportSchema = false)
 public abstract class AlarmRoomDatabase extends RoomDatabase {
     static public AlarmRoomDatabase INSTANCE = null;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(2);

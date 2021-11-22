@@ -57,6 +57,7 @@
         <entry key="app/src/main/res/drawable/round_header.xml" value="0.3671875" />
         <entry key="app/src/main/res/layout/activity_add_alarm.xml" value="0.2765625" />
         <entry key="app/src/main/res/layout/activity_handle_alarm.xml" value="0.307518115942029" />
+        <entry key="app/src/main/res/layout/activity_handle_easy_alarm.xml" value="0.27717391304347827" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.322463768115942" />
         <entry key="app/src/main/res/layout/fragment_add_alarm.xml" value="0.31521739130434784" />
         <entry key="app/src/main/res/layout/fragment_alarms.xml" value="0.31521739130434784" />
@@ -65,6 +66,7 @@
         <entry key="app/src/main/res/layout/fragment_ringtones.xml" value="0.31521739130434784" />
         <entry key="app/src/main/res/layout/fragment_sake_it.xml" value="0.2749094202898551" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.31521739130434784" />
+        <entry key="app/src/main/res/layout/fragment_shake_it.xml" value="0.27717391304347827" />
         <entry key="app/src/main/res/layout/item_alarm.xml" value="0.31521739130434784" />
         <entry key="app/src/main/res/layout/sakeit_fragment.xml" value="0.35052083333333334" />
       </map>

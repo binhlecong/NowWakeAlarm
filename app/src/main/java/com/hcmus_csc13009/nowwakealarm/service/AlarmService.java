@@ -23,6 +23,7 @@ import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
 import com.hcmus_csc13009.nowwakealarm.challenge.ShakeIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
+import com.hcmus_csc13009.nowwakealarm.ui.HandleEasyAlarmActivity;
 
 import java.io.IOException;
 import java.util.Random;
@@ -50,11 +51,15 @@ public class AlarmService extends Service {
         if (bundle != null)
             alarm = (Alarm) bundle.getSerializable(getString(R.string.arg_alarm_obj));
 
-        Intent notificationIntent = new Intent(this, HandleAlarmActivity.class);
+        Intent notificationIntent = new Intent(this, HandleEasyAlarmActivity.class);
+        if (alarm.isHardMode()) {
+            notificationIntent = new Intent(this, HandleAlarmActivity.class);
+            Random r = new Random();
+            notificationIntent.putExtra("challenge_obj",
+                    (r.nextInt(2) == 0) ? CatchIt.class : ShakeIt.class);
+        }
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
-        Random r = new Random();
-        notificationIntent.putExtra("challenge_obj",
-                (r.nextInt(2) == 0) ? CatchIt.class : ShakeIt.class);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         // Alarm default name

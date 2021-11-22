@@ -25,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NowWakeAlarm">
         <activity
+            android:name=".ui.HandleEasyAlarmActivity"
+            android:exported="true"></activity>
+        <activity
             android:name=".ui.PlacePickerActivity"
             android:exported="true" />
         <!--
@@ -41,7 +44,7 @@
 
         <activity
             android:name=".ui.HandleAlarmActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.AddAlarmActivity"
             android:label="AddAlarmActivity"
@@ -66,7 +69,6 @@
 
         <service android:name=".service.AlarmService" />
         <service android:name=".service.RescheduleAlarmService" />
-
     </application>
 
 </manifest>

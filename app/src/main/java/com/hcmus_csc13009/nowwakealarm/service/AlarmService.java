@@ -20,6 +20,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.challenge.CatchIt;
+import com.hcmus_csc13009.nowwakealarm.challenge.HelpIt;
 import com.hcmus_csc13009.nowwakealarm.challenge.ShakeIt;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.ui.HandleAlarmActivity;
@@ -55,8 +56,8 @@ public class AlarmService extends Service {
         if (alarm.isHardMode()) {
             notificationIntent = new Intent(this, HandleAlarmActivity.class);
             Random r = new Random();
-            notificationIntent.putExtra("challenge_obj",
-                    (r.nextInt(2) == 0) ? CatchIt.class : ShakeIt.class);
+            notificationIntent.putExtra("challenge_obj", HelpIt.class);
+                   // (r.nextInt(2) == 0) ? CatchIt.class : ShakeIt.class);
         }
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
 

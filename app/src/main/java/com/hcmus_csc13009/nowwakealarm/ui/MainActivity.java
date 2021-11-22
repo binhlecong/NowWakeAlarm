@@ -15,9 +15,12 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
+import com.hcmus_csc13009.nowwakealarm.ui.MyViewPagerAdapter;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.wwdablu.soumya.lottiebottomnav.FontBuilder;
@@ -33,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     FragmentTransaction transaction = null;
     LottieBottomNav bottomNav;
     ArrayList<MenuItem> list;
-    //private ViewPager2 mViewPager2;
+    private ViewPager viewPager;
+    private MyViewPagerAdapter myViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         //mViewPager2 = findViewById(R.id.myViewPager2);
 
         bottomNav   = findViewById(R.id.bottomAppBar);
+
+        //viewPager = findViewById(R.id.viewPager);
+        
+        //setUpViewPager();
 
 
         //Set font item
@@ -108,14 +116,22 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         bottomNav.setMenuItemList(list);
         bottomNav.setSelectedIndex(0); //first selected index
 
-        /*MyViewPager2Adapter adapter = new MyViewPager2Adapter(this);
-        mViewPager2.setAdapter(adapter);
+        //First selected fragment
+        setFragment(new HomeFragment());
+    }
 
-        mViewPager2.setPageTransformer(new DepthPageTransformer());
-        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+    private void setUpViewPager() {
+        myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPager.setAdapter(myViewPagerAdapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
             @Override
             public void onPageSelected(int position) {
-                super.onPageSelected(position);
                 switch (position){
                     case 0:
                         setFragment(new HomeFragment());
@@ -126,24 +142,22 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                         bottomNav.setSelectedIndex(1);
                         break;
                     case 2:
-                        setFragment(new AddAlarmFragment());
-                        bottomNav.setSelectedIndex(2);
-                        break;
-                    case 3:
-                        setFragment(new RingtonesFragment());
+                        setFragment(new MapFragment());
                         bottomNav.setSelectedIndex(3);
                         break;
-                    case 4:
-                        setFragment(new MapFragment());
+                    case 3:
+                        setFragment(new SettingsFragment());
                         bottomNav.setSelectedIndex(4);
                         break;
 
                 }
             }
-        });*/
 
-        //First selected fragment
-        setFragment(new HomeFragment());
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -151,29 +165,28 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         switch (newIndex) {
             case 0: {
                 setFragment(new HomeFragment());
-                //mViewPager2.setCurrentItem(0);
+                //viewPager.setCurrentItem(0);
                 break;
             }
             case 1: {
                 setFragment(new AlarmsFragment());
-                //mViewPager2.setCurrentItem(1);
+                //viewPager.setCurrentItem(1);
                 break;
             }
             case 2: {
                 startActivity(new Intent(MainActivity.this, AddAlarmActivity.class));
                 bottomNav.setSelectedIndex(1);
                 //setFragment(new AlarmsFragment());
-                //mViewPager2.setCurrentItem(2);
                 break;
             }
             case 3: {
                 setFragment(new MapFragment());
-                //mViewPager2.setCurrentItem(3);
+                //viewPager.setCurrentItem(2);
                 break;
             }
             case 4: {
                 setFragment(new SettingsFragment());
-                //mViewPager2.setCurrentItem(4);
+                //viewPager.setCurrentItem(3);
                 break;
             }
         }

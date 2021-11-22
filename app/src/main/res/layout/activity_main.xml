@@ -24,6 +24,11 @@
         app:layout_anchor="@+id/fragmentContainer"
         app:layout_anchorGravity="center" />-->
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

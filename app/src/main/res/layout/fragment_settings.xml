@@ -139,7 +139,7 @@
                             android:paddingTop="30dp"
                             android:paddingRight="20dp"
                             android:paddingBottom="10dp"
-                            android:text="Radius place (m):"
+                            android:text="Nearby range (m):"
                             android:textAlignment="center"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:fontFamily="@font/coconutz"

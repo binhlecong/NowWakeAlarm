@@ -4,5 +4,5 @@
     android:id="@+id/mainConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HandleAlarmActivity">
-</androidx.appcompat.widget.LinearLayoutCompat>
+    android:background="#F6E6E8"
+    tools:context=".ui.HandleAlarmActivity" />

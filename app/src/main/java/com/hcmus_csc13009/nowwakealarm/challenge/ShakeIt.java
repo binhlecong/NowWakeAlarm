@@ -33,7 +33,6 @@ public class ShakeIt implements Challenge {
         activity.findViewById(R.id.sake_clock).startAnimation(rotation);
     }
 
-
     public void update(int cnt) {
         if (cnt < 5)
             shakeCntTextView.setTextColor(
@@ -52,7 +51,7 @@ public class ShakeIt implements Challenge {
                     activity.getResources().getColor(R.color.range_19_20, activity.getTheme()));
 
         shakeCntTextView.setText(String.valueOf(cnt));
-        if (cnt == 20) {
+        if (cnt >= 20) {
             activity.dismissAlarm();
         }
     }

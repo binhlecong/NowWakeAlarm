@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.customview.SpriteAnimation;
@@ -105,7 +104,7 @@ public class CatchIt implements Challenge {
             });
 
             mainLayout.addView(x);
-            mainLayout.setBackgroundResource(R.drawable.bg_handle_alarm_lowres);
+            mainLayout.setBackgroundResource(R.drawable.bg_catch_it);
         }
     }
 

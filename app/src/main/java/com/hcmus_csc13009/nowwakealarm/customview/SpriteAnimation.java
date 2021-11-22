@@ -47,10 +47,10 @@ public class SpriteAnimation extends AppCompatImageView {
             int id = (Integer) valueAnimator.getAnimatedValue();
             if (id == this.frameIndex) return;
             this.frameIndex = id;
-            int x = posX + (id % this.columns) * this.width;
-            int y = posY + (id / this.columns) * this.height;
+            int x = this.posX + (id % this.columns) * this.width;
+            int y = this.posY + (id / this.columns) * this.height;
             SpriteAnimation.this.setImageBitmap(
-                    SpriteAnimation.this.getSubImage(x, this.posY, this.width, this.height));
+                    SpriteAnimation.this.getSubImage(x, y, this.width, this.height));
             invalidate();
         });
         animationSet.play(sprite);

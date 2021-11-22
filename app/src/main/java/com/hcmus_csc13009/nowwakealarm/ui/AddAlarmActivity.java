@@ -24,6 +24,7 @@ import com.hcmus_csc13009.nowwakealarm.databinding.ActivityAddAlarmBinding;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
 import com.hcmus_csc13009.nowwakealarm.utils.DayUtil;
+import com.hcmus_csc13009.nowwakealarm.utils.SettingConstant;
 import com.hcmus_csc13009.nowwakealarm.utils.TimePickerUtil;
 import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
 import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
@@ -42,7 +43,6 @@ public class AddAlarmActivity extends AppCompatActivity {
     private boolean isVibrate = false;
     private boolean isHard = false;
     private boolean isRepeat = false;
-    private boolean isPositionEnable = false;
 
     private String position;
 
@@ -57,8 +57,11 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         activityAddAlarmBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_alarm);
 
-        tone = RingtoneManager.getActualDefaultRingtoneUri(this,
-                RingtoneManager.TYPE_ALARM).toString();
+        tone = SettingConstant.getDefaultRingtone(getApplicationContext());
+        if (tone == null) {
+            tone = RingtoneManager.getActualDefaultRingtoneUri(this,
+                    RingtoneManager.TYPE_ALARM).toString();
+        }
         ringtone = RingtoneManager.getRingtone(this, Uri.parse(tone));
 
         activityAddAlarmBinding.setToneNameAlarm.setText(ringtone.getTitle(this));
@@ -100,12 +103,10 @@ public class AddAlarmActivity extends AppCompatActivity {
             activityAddAlarmBinding.optionalOptions.setVisibility(View.VISIBLE);
         });
 
-
         activityAddAlarmBinding.setAddressCard.setOnClickListener(v -> {
             Intent intent = new Intent(AddAlarmActivity.this, PlacePickerActivity.class);
             if (alarm != null && alarm.getPosition() != null && alarm.getPosition().length() != 0) {
                 intent.putExtra(EXTRA_POSITION, alarm.getPosition());
-                Log.i("@@@ putExtra", alarm.getPosition());
             }
             startActivityForResult(intent, REQUEST_FOR_POSITION);
         });
@@ -114,6 +115,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.getSupportActionBar().setDisplayShowTitleEnabled(false);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void loadAlarmInfo(Alarm alarm) {
@@ -132,7 +134,7 @@ public class AddAlarmActivity extends AppCompatActivity {
         activityAddAlarmBinding.checkBoxTryHard.setChecked(alarm.isHardMode());
         activityAddAlarmBinding.checkBoxVibrate.setChecked(alarm.isVibrateMode());
         activityAddAlarmBinding.recurringCheck.setChecked(alarm.isRepeatMode());
-        activityAddAlarmBinding.recurringCheck.setChecked(alarm.isPositionEnableMode());
+        activityAddAlarmBinding.locationCheck.setChecked(alarm.isEnablePosition());
         if (alarm.isRepeatMode()) {
             activityAddAlarmBinding.optionsRecurring.setVisibility(View.VISIBLE);
             for (WeekDays day : WeekDays.values()) {
@@ -180,6 +182,9 @@ public class AddAlarmActivity extends AppCompatActivity {
         this.isVibrate = alarm.isVibrateMode();
         this.isHard = alarm.isHardMode();
         this.position = alarm.getPosition();
+
+        Log.i("@@@ checked", alarm.isEnablePosition() + " " + alarm.getPosition());
+
     }
 
     @Override
@@ -197,6 +202,11 @@ public class AddAlarmActivity extends AppCompatActivity {
             }
             finish();
 //            startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
+            return true;
+        } else if (itemId == R.id.delete) {
+            if (alarm != null)
+                alarmViewModel.delete(alarm);
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -217,10 +227,21 @@ public class AddAlarmActivity extends AppCompatActivity {
                 activityAddAlarmBinding.friRecurringCheck.isChecked(),
                 activityAddAlarmBinding.satRecurringCheck.isChecked(),
                 activityAddAlarmBinding.sunRecurringCheck.isChecked());
+
+        if (!activityAddAlarmBinding.recurringCheck.isChecked()) {
+            daysInWeek = 0;
+            isRepeat = false;
+        }
         if (daysInWeek == 0)
             isRepeat = false;
+
         long time = AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
                 TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
+
+        boolean locationCheck = activityAddAlarmBinding.locationCheck.isChecked();
+        if (position != null && locationCheck) {
+            daysInWeek |= 1 << 7; // set on bit enable position alarm feature
+        }
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         int id = timestamp.hashCode();
@@ -242,6 +263,7 @@ public class AddAlarmActivity extends AppCompatActivity {
             alarm.setTagUri(uri);
             alarm.setAddress(address);
         }
+        Log.i("@@@ checked", alarm.isEnablePosition() + " " + alarm.getPosition());
     }
 
     private void scheduleAlarm() {

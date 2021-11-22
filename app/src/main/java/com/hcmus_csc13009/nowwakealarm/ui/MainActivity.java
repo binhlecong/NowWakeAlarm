@@ -5,11 +5,15 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.wwdablu.soumya.lottiebottomnav.FontBuilder;
@@ -26,6 +30,13 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     LottieBottomNav bottomNav;
     ArrayList<MenuItem> list;
 
+    HomeFragment homeFragment = null;
+    AlarmsFragment alarmsFragment = null;
+    MapFragment mapFragment = null;
+    SettingsFragment settingsFragment = null;
+    // help click on add button
+    private ImageView virtualButton = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
 
         bottomNav   = findViewById(R.id.bottomAppBar);
 
+        //viewPager = findViewById(R.id.viewPager);
+
+        //setUpViewPager();
+        setupVirtualAddButton();
 
         //Set font item
         FontItem fontItem = FontBuilder.create("Home")
@@ -106,26 +121,35 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     public void onMenuSelected(int oldIndex, int newIndex, MenuItem menuItem) {
         switch (newIndex) {
             case 0: {
-                setFragment(new HomeFragment());
+                setFragment(getHomeFragment());
+                //viewPager.setCurrentItem(0);
                 break;
             }
             case 1: {
-                setFragment(new AlarmsFragment());
+                setFragment(getAlarmsFragment());
+                //viewPager.setCurrentItem(1);
                 break;
             }
             case 2: {
                 startActivity(new Intent(MainActivity.this, AddAlarmActivity.class));
-                bottomNav.setSelectedIndex(1);
+                virtualButton.setVisibility(View.VISIBLE);
+                //setFragment(new AlarmsFragment());
                 break;
             }
             case 3: {
-                setFragment(new MapFragment());
+                setFragment(getMapFragment());
+                //viewPager.setCurrentItem(2);
                 break;
             }
             case 4: {
-                setFragment(new SettingsFragment());
+                setFragment(getSettingFragment());
+                //viewPager.setCurrentItem(3);
                 break;
             }
+        }
+        // if switch tab then
+        if (newIndex != 2) {
+            virtualButton.setVisibility(View.GONE);
         }
     }
 
@@ -162,5 +186,38 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    // help get fragment object
+    private HomeFragment getHomeFragment() {
+        if (homeFragment == null)
+            homeFragment = new HomeFragment();
+        return homeFragment;
+    }
+
+    private AlarmsFragment getAlarmsFragment() {
+        if (alarmsFragment == null)
+            alarmsFragment = new AlarmsFragment();
+        return alarmsFragment;
+    }
+
+    private MapFragment getMapFragment() {
+        if (mapFragment == null)
+            mapFragment = new MapFragment();
+        return mapFragment;
+    }
+
+    private SettingsFragment getSettingFragment() {
+        if (settingsFragment == null)
+            settingsFragment = new SettingsFragment();
+        return settingsFragment;
+    }
+    // virtual button allow multiple click on add button
+    private void setupVirtualAddButton() {
+        virtualButton = findViewById(R.id.virtualAddButton);
+        virtualButton.setVisibility(View.GONE);
+        virtualButton.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, AddAlarmActivity.class));
+        });
     }
 }

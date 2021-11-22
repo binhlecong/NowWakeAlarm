@@ -41,6 +41,11 @@
         app:menu_unselected_height="48dp"
         app:menu_unselected_width="48dp" />
 
-
+    <ImageView
+        android:id="@+id/virtualAddButton"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

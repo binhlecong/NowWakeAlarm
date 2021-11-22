@@ -1,6 +1,5 @@
 package com.hcmus_csc13009.nowwakealarm.ui;
 
-import android.app.SearchManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,6 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
         adapter = new AlarmAdapter(this.getContext(), this);
         alarmViewModel = new ViewModelProvider(this).get(AlarmViewModel.class);
         alarmViewModel.getAllAlarms().observe(this, adapter::setAlarms);
-
     }
 
     @Nullable
@@ -51,7 +49,7 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
 //        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         addSwipAndDragItem();
-
+        // manage search view
         searchView = view.findViewById(R.id.search_recipe);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override

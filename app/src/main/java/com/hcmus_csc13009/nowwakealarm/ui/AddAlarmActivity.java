@@ -246,7 +246,6 @@ public class AddAlarmActivity extends AppCompatActivity {
 
     private void scheduleAlarm() {
         updateCurrentAlarmInfo();
-        // TODO: DB
         // write into database
         alarmViewModel.insert(alarm);
         AlarmUtils.scheduleAlarm(this, alarm);
@@ -254,7 +253,6 @@ public class AddAlarmActivity extends AppCompatActivity {
 
     private void updateAlarm() {
         updateCurrentAlarmInfo();
-        // TODO: DB
         // update database
         alarmViewModel.update(alarm);
         AlarmUtils.scheduleAlarm(this, alarm);

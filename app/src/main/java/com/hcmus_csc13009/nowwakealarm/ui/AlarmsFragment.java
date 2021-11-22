@@ -102,13 +102,12 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
             alarm.setEnable(true);
             AlarmUtils.scheduleAlarm(getContext(), alarm);
         }
-        // TODO: DB
+
         alarmViewModel.update(alarm);
     }
 
     @Override
     public void onDelete(Alarm alarm) {
-        // TODO: DB
         alarmViewModel.delete(alarm);
         AlarmUtils.cancelAlarm(getContext(), alarm);
     }
@@ -116,7 +115,8 @@ public class AlarmsFragment extends Fragment implements DatabaseHelper {
     @Override
     public void onUpdate(Alarm alarm) {
         alarmViewModel.update(alarm);
+        AlarmUtils.scheduleAlarm(getContext(), alarm);
+        // Todo check this
     }
 
-    // TODO - Binh add cancel alarm service listener
 }

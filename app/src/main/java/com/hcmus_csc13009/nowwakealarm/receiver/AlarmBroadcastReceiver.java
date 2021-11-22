@@ -23,15 +23,18 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
 import com.hcmus_csc13009.nowwakealarm.service.AlarmService;
 import com.hcmus_csc13009.nowwakealarm.service.RescheduleAlarmService;
+import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
 import com.hcmus_csc13009.nowwakealarm.utils.MapUtil;
 import com.hcmus_csc13009.nowwakealarm.utils.SettingConstant;
 import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
+import com.hcmus_csc13009.nowwakealarm.viewmodel.AlarmViewModel;
 
 import java.util.Calendar;
 
@@ -116,7 +119,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                             LatLng dest = alarm.getLatLngPosition();
                             if (MapUtil.getDistance(location.getLatitude(), location.getLongitude(),
                                     dest.latitude, dest.longitude) < SettingConstant.NEARBY_RANGE) {
-                                startNotifyService(context, alarm);
+                                startNotification(context, alarm);
                             } else {
                                 startAlarm(context);
                             }
@@ -141,7 +144,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void startNotifyService(Context context, Alarm alarm) {
+    private void startNotification(Context context, Alarm alarm) {
         final int id = alarm.getID();
 
         String channelName = "Alarm Background Service";

@@ -419,7 +419,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_margin="6dp"
-                                        android:text="Select a location"
+                                        android:hint="Select a location"
                                         android:fontFamily="@font/coconutz"
                                         android:textAlignment="center"
                                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

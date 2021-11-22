@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class PlacePickerActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.confirmButton);
         TextView addressView = (TextView) findViewById(R.id.locationTextView);
         mapFragment.setTextViewListener(addressView);
+        mapFragment.setProgressBar((ProgressBar) findViewById(R.id.progress_bar));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +50,6 @@ public class PlacePickerActivity extends AppCompatActivity {
         });
 
         String position = getIntent().getStringExtra(AddAlarmActivity.EXTRA_POSITION);
-        Log.i("@@@ position in picker", position);
         if (position != null)
             mapFragment.setPosition(position);
     }

@@ -38,15 +38,16 @@
 
                 <ImageView
                     android:id="@+id/small_pin"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/ic_clock_pointer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_map_location"
+                    android:layout_gravity="center_vertical"
                     android:visibility="visible" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:visibility="gone" />
@@ -60,7 +61,7 @@
                     android:paddingBottom="10dp"
                     android:paddingEnd="5dp"
                     android:textColor="@android:color/primary_text_light"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:text="Choose your location"
                     android:gravity="center_horizontal"/>
 

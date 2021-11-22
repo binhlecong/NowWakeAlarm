@@ -1,21 +1,13 @@
 package com.hcmus_csc13009.nowwakealarm.data;
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.RoomDatabase;
 import androidx.room.Room;
-import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.room.RoomDatabase;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.hcmus_csc13009.nowwakealarm.models.Alarm;
-import com.hcmus_csc13009.nowwakealarm.utils.AlarmUtils;
-import com.hcmus_csc13009.nowwakealarm.utils.WeekDays;
 
-import java.util.Calendar;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

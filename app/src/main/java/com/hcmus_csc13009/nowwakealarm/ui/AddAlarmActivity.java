@@ -207,19 +207,17 @@ public class AddAlarmActivity extends AppCompatActivity {
 
         if (alarmTitle.length() == 0)
             alarmTitle = getString(R.string.default_title);
-        byte daysInWeek =
-                AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
-                        activityAddAlarmBinding.tueRecurringCheck.isChecked(),
-                        activityAddAlarmBinding.wedRecurringCheck.isChecked(),
-                        activityAddAlarmBinding.thuRecurringCheck.isChecked(),
-                        activityAddAlarmBinding.friRecurringCheck.isChecked(),
-                        activityAddAlarmBinding.satRecurringCheck.isChecked(),
-                        activityAddAlarmBinding.sunRecurringCheck.isChecked());
+        byte daysInWeek = AlarmUtils.getBitFormat(activityAddAlarmBinding.monRecurringCheck.isChecked(),
+                activityAddAlarmBinding.tueRecurringCheck.isChecked(),
+                activityAddAlarmBinding.wedRecurringCheck.isChecked(),
+                activityAddAlarmBinding.thuRecurringCheck.isChecked(),
+                activityAddAlarmBinding.friRecurringCheck.isChecked(),
+                activityAddAlarmBinding.satRecurringCheck.isChecked(),
+                activityAddAlarmBinding.sunRecurringCheck.isChecked());
         if (daysInWeek == 0)
             isRepeat = false;
-        long time =
-                AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
-                        TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
+        long time = AlarmUtils.getTimeMillis(TimePickerUtil.getTimePickerHour(activityAddAlarmBinding.timePicker),
+                TimePickerUtil.getTimePickerMinute(activityAddAlarmBinding.timePicker));
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         int id = timestamp.hashCode();
@@ -262,7 +260,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
+        //startActivity(new Intent(AddAlarmActivity.this, MainActivity.class));
         finish();
     }
 

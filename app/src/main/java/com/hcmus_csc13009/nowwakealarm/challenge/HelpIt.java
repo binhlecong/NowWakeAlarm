@@ -11,9 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.hcmus_csc13009.nowwakealarm.R;
 import com.hcmus_csc13009.nowwakealarm.customview.SpriteAnimation;
@@ -84,8 +82,8 @@ public class HelpIt implements Challenge {
                 for (ObjectAnimator boss : bossList) {
                     if (sec - prevCatch <= 5) break;
                     if (isIntersect((SpriteAnimation) boss.getTarget(), player)) {
-                        totalTime += 2;
-                        prevCatch = delta;
+                        totalTime += delta;
+                        prevCatch = sec;
                         break;
                     }
                 }
@@ -93,7 +91,7 @@ public class HelpIt implements Challenge {
                     totalTime = 60;
                     delta = 0;
                 }
-                textView.setText(String.format("Keep You Safety for %d seconds", totalTime - sec));
+                textView.setText(String.format("Keep You Safe for %d seconds", totalTime - sec));
                 if (totalTime - sec <= 0)
                     activity.dismissAlarm();
                 return true;

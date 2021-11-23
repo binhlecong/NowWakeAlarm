@@ -57,8 +57,7 @@ public class AlarmService extends Service {
             notificationIntent = new Intent(this, HandleAlarmActivity.class);
             Random r = new Random();
             int index = r.nextInt(3);
-            notificationIntent.putExtra("challenge_obj", index == 0 ? CatchIt.class : index == 1 ? ShakeIt.class : HelpIt.class);
-                   // (r.nextInt(2) == 0) ? CatchIt.class : ShakeIt.class);
+            notificationIntent.putExtra("challenge_obj", index == 0 ? CatchIt.class : (index == 1 ? ShakeIt.class : HelpIt.class));
         }
         notificationIntent.putExtra(getString(R.string.bundle_alarm_obj), bundle);
 

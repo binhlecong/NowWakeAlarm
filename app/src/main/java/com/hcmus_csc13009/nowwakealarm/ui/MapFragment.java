@@ -80,16 +80,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(setPosition));
                 if (textView != null)
                     textView.setText(getCurrentSelected());
+            } else {
+                LatLng defaultPosition = new LatLng(10.8230989, 106.62696638);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(defaultPosition));
             }
-            LatLng defaultPosition = new LatLng(10.8230989, 106.62696638);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(defaultPosition));
-
-//            mMap.addCircle(new CircleOptions().center(defaultPosition)
-//                    .radius(SettingConstant.getNearbyRange(getActivity().getApplicationContext()))
-//                    .clickable(false)
-//                    .fillColor(0x220000FF)
-//                    .strokeColor(Color.BLACK)
-//                    .strokeWidth(2));
 
             mMap.setOnMapClickListener(MapFragment.this);
             mMap.setOnMarkerClickListener(MapFragment.this);
@@ -329,6 +323,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
         String[] parts = position.split(",");
         if (parts.length != 2) return;
         setPosition = new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+        if (mMap != null)
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(setPosition));
+        if (textView != null)
+            textView.setText(getCurrentSelected());
     }
 
     public void setProgressBar(ProgressBar progressBar) {

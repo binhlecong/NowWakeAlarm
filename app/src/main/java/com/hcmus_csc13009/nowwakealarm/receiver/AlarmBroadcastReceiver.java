@@ -19,6 +19,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -113,8 +114,18 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                                     MIN_TIME_REQUEST, 5, locationListener);
                             Location location = locationManager
                                     .getLastKnownLocation(provider);
+                            if (location == null) {
+                                for (String p : locationManager.getProviders(true)) {
+                                    Location l = locationManager.getLastKnownLocation(p);
+                                    if (l == null) continue;
+                                    if (location == null || l.getAccuracy() > location.getAccuracy()) {
+                                        location = l;
+                                    }
+                                }
+                            }
+
                             LatLng dest = alarm.getLatLngPosition();
-                            if (MapUtil.getDistance(location.getLatitude(), location.getLongitude(),
+                            if (location != null && MapUtil.getDistance(location.getLatitude(), location.getLongitude(),
                                     dest.latitude, dest.longitude) < SettingConstant.getNearbyRange(context)) {
                                 startNotification(context, alarm);
                             } else {

@@ -29,6 +29,11 @@ public class PlacePickerActivity extends AppCompatActivity {
             Toast.makeText(this, "Can't load Map", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        String position = getIntent().getStringExtra(AddAlarmActivity.EXTRA_POSITION);
+        if (position != null)
+            mapFragment.setPosition(position);
+
         Button button = findViewById(R.id.confirmButton);
         TextView addressView = findViewById(R.id.locationTextView);
         mapFragment.setTextViewListener(addressView);
@@ -43,8 +48,6 @@ public class PlacePickerActivity extends AppCompatActivity {
             }
         });
 
-        String position = getIntent().getStringExtra(AddAlarmActivity.EXTRA_POSITION);
-        if (position != null)
-            mapFragment.setPosition(position);
+
     }
 }

@@ -72,7 +72,7 @@ public class CatchIt implements Challenge {
                 }
             });
             ObjectAnimator translateY = ObjectAnimator.ofFloat(x, "y", scrHeight);
-            translateY.setDuration((i + 1) * 1000);
+            translateY.setDuration((i + 1) * 1000L);
             translateY.setRepeatCount(ValueAnimator.INFINITE);
             translateY.addListener(new Animator.AnimatorListener() {
                 @Override

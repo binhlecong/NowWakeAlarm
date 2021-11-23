@@ -183,7 +183,6 @@ public class AddAlarmActivity extends AppCompatActivity {
         this.isHard = alarm.isHardMode();
         this.position = alarm.getPosition();
 
-        Log.i("@@@ checked", alarm.isEnablePosition() + " " + alarm.getPosition());
 
     }
 
@@ -267,7 +266,6 @@ public class AddAlarmActivity extends AppCompatActivity {
             alarm.setTagUri(uri);
             alarm.setAddress(address);
         }
-        Log.i("@@@ checked", alarm.isEnablePosition() + " " + alarm.getPosition());
     }
 
     private void scheduleAlarm() {

@@ -58,7 +58,6 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         if (alarms != null) {
             Alarm currentAlarm = alarms.get(position);
-            Log.i("@@@ ID = ", "" + currentAlarm.getID());
             holder.isStart.setChecked(currentAlarm.isEnable());
             holder.title.setText(currentAlarm.getTitle());
             holder.time.setText(AlarmUtils.getHourMinute(currentAlarm.getTime()));

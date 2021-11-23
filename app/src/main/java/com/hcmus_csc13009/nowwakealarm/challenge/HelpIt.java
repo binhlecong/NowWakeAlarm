@@ -25,7 +25,7 @@ public class HelpIt implements Challenge {
     private final HandleAlarmActivity activity;
     private final ConstraintLayout mainLayout;
     private ArrayList<ObjectAnimator> bossList;
-    private TextView textView;
+    private final TextView textView;
 
     public HelpIt(HandleAlarmActivity activity) {
         this.activity = activity;
@@ -70,10 +70,8 @@ public class HelpIt implements Challenge {
                         break;
                     }
                     case MotionEvent.ACTION_MOVE: {
-                        if (true) {
-                            player.animate().x(x - 42  * 2).y(y - 24 * 2).setDuration(0).start();
+                        player.animate().x(x - 42  * 2).y(y - 24 * 2).setDuration(0).start();
 
-                        }
                         break;
                     }
                 }

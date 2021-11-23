@@ -15,7 +15,7 @@
         android:background="#A58CB3"
         android:fontFamily="@font/coconutz"
         android:padding="10dp"
-        android:text="Keep You Safty From The Monster"
+        android:text="Keep You Safe From The Monster"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"

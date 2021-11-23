@@ -28,6 +28,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -80,15 +81,26 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                 if (textView != null)
                     textView.setText(getCurrentSelected());
             }
-            getDeviceLocation();
+            LatLng defaultPosition = new LatLng(10.8230989, 106.62696638);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(defaultPosition));
+
+//            mMap.addCircle(new CircleOptions().center(defaultPosition)
+//                    .radius(SettingConstant.getNearbyRange(getActivity().getApplicationContext()))
+//                    .clickable(false)
+//                    .fillColor(0x220000FF)
+//                    .strokeColor(Color.BLACK)
+//                    .strokeWidth(2));
 
             mMap.setOnMapClickListener(MapFragment.this);
             mMap.setOnMarkerClickListener(MapFragment.this);
             // setup data in database
+            if (allAlarms != null)
+                getDeviceLocation();
             alarmViewModel = new ViewModelProvider(MapFragment.this).get(AlarmViewModel.class);
             alarmViewModel.getAllAlarms().observe(MapFragment.this, alarms -> {
                 if (alarms != null && allAlarms == null) {
-                    attachAlarmPosition(alarms);
+                    allAlarms = alarms;
+                    getDeviceLocation();
                 }
                 allAlarms = alarms;
             });
@@ -121,6 +133,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
             rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
             rlp.setMargins(0, 100, 30, 0);
         }
+
 
     }
 
@@ -160,7 +173,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
     }
 
     private void attachAlarmPosition(List<Alarm> alarms) {
-        mMap.clear();
+//        mMap.clear();
         for (Alarm alarm : alarms) {
             if (alarm.getPosition() != null && !alarm.getPosition().isEmpty()) {
                 LatLng alarmLocation = alarm.getLatLngPosition();
@@ -176,7 +189,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                 } else {
                     options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer));
                 }
-                options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer));
+//                options.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_clock_pointer));
                 mMap.addMarker(options);
             }
         }
@@ -184,13 +197,13 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
 
     private void getDeviceLocation() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION};
             requestPermissions(permissions, 1234);
-            return;
+            // return;
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -199,14 +212,22 @@ public class MapFragment extends Fragment implements GoogleMap.OnMapClickListene
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
                         deviceLocation = location;
+                        LatLng locationLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.addCircle(new CircleOptions().center(locationLatLng)
+                                .radius(SettingConstant.getNearbyRange(getActivity().getApplicationContext()))
+                                .clickable(false)
+                                .fillColor(0x220000FF)
+                                .strokeWidth(2));
                         if (setPosition == null) {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(locationLatLng));
                             if (textView != null)
                                 textView.setText(getCurrentSelected());
-                                currentSelected = addMarkerOnMap(new LatLng(location.getLatitude(), location.getLongitude()));
+                            currentSelected = addMarkerOnMap(new LatLng(location.getLatitude(), location.getLongitude()));
                         }
                         setPosition = null;
                     }
+                    attachAlarmPosition(allAlarms);
+
                 });
     }
 

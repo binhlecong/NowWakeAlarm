@@ -117,6 +117,7 @@ public class HandleAlarmActivity extends AppCompatActivity {
             challenge.play();
         } catch (Exception e) {
             Toast.makeText(this, "Can't not play Challenge", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 

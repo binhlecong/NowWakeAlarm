@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/helpit_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6E6E8"
+    tools:context=".ui.HandleAlarmActivity">
+
+    <TextView
+        android:id="@+id/helpItTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#A58CB3"
+        android:fontFamily="@font/coconutz"
+        android:padding="10dp"
+        android:text="Keep You Safty From The Monster"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

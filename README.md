@@ -11,7 +11,7 @@ HCMUS CSC13009 - Mobile Dev
 🧑 **Nguyễn Đăng Tiến Thành**
 - Github: [@tienthanh214](https://github.com/tienthanh214)
 
-👶 **Lê Công Bình**
+👽 **Lê Công Bình**
 - Github: [@binhlecong](https://github.com/binhlecong)
 
 👧 **Nguyễn Lê Bảo Thi**

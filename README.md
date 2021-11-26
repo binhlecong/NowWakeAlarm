@@ -1,6 +1,8 @@
 # NowWakeAlarm
 
-An app for headvy sleeper
+An app for heavy sleeper
+
+Wake you up with some Challenges
 
 -----------------------------------------
 
